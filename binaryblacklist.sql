@@ -21,7 +21,7 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100002, 'alt.binaries.*', 'TrollHD|Olympics|Serbian|damike99|iMPACT|AVIGUY', 1, 1, 0, ''),
 (100003, 'alt.binaries.*', 'CowboyUp26|gr4ndstre4m|CowboyUp2012|trein', 1, 1, 0, ''),
 (1000040, 'alt.binaries.*', '[-.](FR|DE|ITA)[-.]', 1, 1, 1, 'Block Foreign Abbreviations'),
-(100008, 'alt.binaries.*', 'german|danish|flemish|swedish|swesub|deutsch|DEFA|Knochen|korsub|GERMAN| Keygen|Giro|norwegian|\\.ita\\.|\\.japanese\\.|\\.GER\\.|ita-eng|FLEMISH|iRLS\\\\HYBRiS|FR|NORWEGIAN|Liga|EUFA|Footy|NRL|Snoballkrigen!ATKGalleria|RealCo|[MP4SUX]|Turkish|CytSuNee|NZBRoyalty', 1, 1, 0, ''),
+(100008, 'alt.binaries.*', 'german|danish|flemish|swedish|swesub|deutsch|DEFA|Knochen|korsub|GERMAN|Keygen|Giro|norwegian|\\.ita\\.|\\.japanese\\.|\\.GER\\.|ita-eng|FLEMISH|iRLS\\\\HYBRiS|FR|NORWEGIAN|Liga|EUFA|Footy|NRL|Snoballkrigen!ATKGalleria|RealCo|[MP4SUX]|Turkish|CytSuNee|NZBRoyalty', 1, 1, 0, ''),
 (100012, 'alt.binaries.*', 'wii|ps3|xbox', 1, 1, 1, 'Console'),
 (1, 'alt.binaries.boneless', 'usenet-4all|u4all|usenet4all', 1, 2, 0, 'only allow u4all posts in boneless'),
 (100014, 'alt.binaries.cores', 'xxx', 3, 1, 0, 'Removes XXX.'),
@@ -39,4 +39,4 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100040, 'alt.binaries.*', 'AutoRarPar\\d', 1, 1, 0, 'Removes releases with AutoRarPar\\d in the name.'),
 (100043, 'alt.binaries.*', 'CPP-Gebruiker', 2, 1, 0, 'foreign'),
 (100044, 'alt.binaries.*', 'NoTHing|9NoTHing|EveryFinG', 1, 1, 0, '');
-
+(100045, 'alt.binaries.*', 'L.Joe@no-mans-land.com', 2, 1, 0, 'foreign'),
