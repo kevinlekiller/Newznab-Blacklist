@@ -6,7 +6,7 @@ Blacklist for Newznab.
 All blacklists are disabled by default, enable them in admin - view black list, click the edit button to the right of the blacklist.
 Sort them by clicking on ID 2 times.
 
-(Change user= for your mysql user in the following commands)
+(Change root in user=root for your own mysql user in the following commands)
 
 Backup your your blacklist: from a command line: mysqldump -l --user=root -p newznab binaryblacklist > binaryblacklist.sql
  
