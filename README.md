@@ -3,6 +3,8 @@ Newznab-Blacklist
 
 Blacklist for Newznab.
 
+You can use the blacklists.txt file to manually add blacklists into newznab, or use the SQL file to import them all in 1 go.
+
 All blacklists are disabled by default, enable them in admin - view black list, click the edit button to the right of the blacklist, click enable and save.
 
 (Change root in user=root for your own mysql user in the following commands)
