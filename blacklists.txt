@@ -7,7 +7,7 @@ alt.binaries.*    french|german|danish|spanish|flemish|dutch|swedish|swesub|deut
 alt.binaries.*    Serbian|FRENCH|GERMAN|NORWEGIAN|Turkish|korsub|\\.japanese\\.|\\.GER\\.|ita-eng|FLEMISH    subject black Blocks non-english language releases
 
 
-alt.binaries.*    [-.](FR|DE|ITA)[-.]'    sunject black    Block Foreign Abbreviations
+alt.binaries.*    [-.](FR|DE|ITA)[-.]    sunject black    Block Foreign Abbreviations
 
 
 alt.binaries.*    (^|[.\\/ \\-]+)(sie|seit|ihn|ihm|haben|besitzen|sein|kriegen|nehmen|welche|jenes|von|auf|gegen|nach|das|sein|der|und|fuer|ersten|leicht|meinem|zum|aus|dem|blitzlicht|alle|grosse|zed|ich|sed|blitzen)([.\\/ \\-]+|$)    subject black    Removes many german releases
