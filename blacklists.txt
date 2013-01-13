@@ -13,7 +13,7 @@ alt.binaries.*    [-.](FR|DE|ITA)[-.]    sunject black    Block Foreign Abbrevia
 alt.binaries.*    (^|[.\\/ \\-]+)(sie|seit|ihn|ihm|haben|besitzen|sein|kriegen|nehmen|welche|jenes|von|auf|gegen|nach|das|sein|der|und|fuer|ersten|leicht|meinem|zum|aus|dem|blitzlicht|alle|grosse|zed|ich|sed|blitzen)([.\\/ \\-]+|$)    subject black    Removes many german releases
 
 
-alt.binaries.*    CPP-Gebruiker|L.Joe@no-mans-land.com    poster black    Blocks foreign posters
+alt.binaries.*    CPP-Gebruiker|L.Joe@no-mans-land.com|Firestorm2012    poster black    Blocks foreign posters
 
 
 alt.binaries.*    DEFA|Knochen|Giro|iRLS\\\\HYBRiS|Snoballkrigen!ATKGalleria|RealCo|[MP4SUX]|CytSuNee|NZBRoyalty    sunject black    Blocking various
@@ -38,6 +38,12 @@ alt.binaries.*    xvid|divx|480p|320p    subject black    Blocking xvid encodes
 
 
 alt.binaries.*    wii|ps3|xbox|nds    subject black    Blocking console
+
+
+alt.binaries.*    MacOSX    subject black    Blocking pc
+
+
+alt.binaries.*    AnDrOiD    subject black    Blocking mobile
 
 
 alt.binaries.*    Olympics|NASCAR|NHL|EUFA|NRL    subject black    Blocking sports
