@@ -1,23 +1,39 @@
-Newznab-Blacklist
+Newznab_blacklist
 =================
 
-Blacklist for Newznab.
+What is blocked?
+-------------------------
+I block all german, turkish, danish, belgium, french, norwegian, korsub, ita, japanese, spanish.
+All android, iPhone, console releases.
+!! All non HD content!!
 
-You can use the blacklists.txt file to manually add blacklists into newznab, or use the SQL file to import them all in 1 go.
 
-All blacklists are disabled by default, enable them in admin - view black list, click the edit button to the right of the blacklist, click enable and save.
+The list is only for HD movies, series and MP3.
+You can use the list also for non HD and non console blocker, just make sure to disable them.
 
-(Change root in user=root for your own mysql user in the following commands)
 
-Backup your blacklist: from a command line: mysqldump -l --user=root -p newznab binaryblacklist > binaryblacklist.sql
- 
-To import the blacklist, from a command where the blacklist is, type: mysql --user=root -p newznab < binaryblacklist.sql to import.
 
-You can also use phpmyadmin to backup/import.
+
+How to install this
+-------------------------
+BACKUP BACKUP BACKUP!
+----------------------------------
+Through CLI of linux: mysqldump -l -u username -p -h localhost DATA-BASE-NAME binaryblacklist > binaryblacklist.sql
+
+
+Through CLI of linux: mysql -u username -p -h localhost DATA-BASE-NAME < binaryblacklist.sql
+
+Or you can use PHPMYADMIN
+* Open phpmyadmin
+* Login
+* Go to your database
+* Hit import
+* Done.
+
 
 ---------------------------------------------------------------------------------------------------------------------
 
-Thanks to nivong for additions.
+Thanks to nivong for additions. His github can be found at: https://github.com/nivong/Newznab_blacklist
 
 ---------------------------------------------------------------------------------------------------------------------
 

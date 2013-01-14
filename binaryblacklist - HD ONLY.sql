@@ -12,13 +12,13 @@ CREATE TABLE IF NOT EXISTS `binaryblacklist` (
 
 
 INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `status`, `description`) VALUES
-(100009, 'alt.binaries.*', 'dvd|dvdrip|dvdr|dvd-r|dvd-rip|DVDRip', 1, 1, 0, 'dvd troep'),
-(100000, 'alt.binaries.*', 'xvid|divx|480p|320p', 1, 1, 0, 'Blocking xvid encodes.'),
+(100009, 'alt.binaries.*', 'dvd|dvdrip|dvdr|dvd-r|dvd-rip|DVDRip', 1, 1, 1, 'dvd troep'),
+(100000, 'alt.binaries.*', 'xvid|divx|480p|320p', 1, 1, 1, 'Blocking xvid encodes.'),
 (100004, 'alt.binaries.*', 'nomytnopyht|lordsofusenet|klaus|ihate|aart|my2cents|ISNOGOOD|Captain Jack|seizoen', 2, 1, 0, 'Virus Posters'),
 (100002, 'alt.binaries.*', 'TrollHD|Olympics|Serbian|damike99|iMPACT|AVIGUY', 1, 1, 0, ''),
 (100003, 'alt.binaries.*', 'CowboyUp26|gr4ndstre4m|CowboyUp2012|trein', 1, 1, 0, ''),
-(100008, 'alt.binaries.*', 'german|spanish|danish|flemish|french|swedish|swesub|deutsch|korsub|GERMAN|Keygen|\.ita\.|Giro|norwegian|ita|japanese|GER|ita-eng|FLEMISH|NORWEGIAN|Turkish|FRENCH|SPANiSH|DKsubs', 1, 1, 0, ''),
-(100012, 'alt.binaries.*', 'wii|ps3|xbox|AnDrOiD|MacOSX', 1, 1, 0, 'Console'),
+(100008, 'alt.binaries.*', 'german|spanish|danish|flemish|french|swedish|swesub|deutsch|korsub|GERMAN|Keygen|\.ita\.|Giro|norwegian|ita|japanese|GER|ita-eng|FLEMISH|NORWEGIAN|Turkish|FRENCH|SPANiSH|DKsubs', 1, 1, 1, ''),
+(100012, 'alt.binaries.*', 'wii|ps3|xbox|AnDrOiD|MacOSX', 1, 1, 1, 'Console'),
 (1, 'alt.binaries.boneless', 'usenet-4all|u4all|usenet4all', 1, 2, 0, 'only allow u4all posts in boneless'),
 (100014, 'alt.binaries.cores', 'xxx', 3, 1, 0, 'Removes XXX.'),
 (100016, 'alt.binaries.ghosts', 'xxx', 3, 1, 0, 'removes xxx'),
@@ -29,8 +29,8 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100023, 'alt.binaries.tv', '6UL85|XA7MY|36CLX|Y642D', 1, 1, 0, 'Removes crap.'),
 (100024, 'alt.binaries.*', 'TheMaker|gilf|lordsofusenet|klaus|ihate|aart|my2cents|ISNOGOOD|Captain Jack', 2, 1, 0, 'VIRUS POSTERS'),
 (100025, 'alt.binaries.*', '^[a-z0-9]{20}', 1, 1, 0, 'Removes crap.'),
-(100036, 'alt.binaries.*', '(^|[.\\/ \\-]+)(sie|seit|ihn|ihm|haben|besitzen|sein|kriegen|nehmen|welche|jenes|von|auf|gegen|nach|das|sein|der|und|fuer|ersten|leicht|meinem|zum|aus|dem|blitzlicht|alle|grosse|zed|ich|sed|blitzen)([.\\/ \\-]+|$)', 1, 1, 0, 'Removes many german releases.'),
+(100036, 'alt.binaries.*', '(^|[.\\/ \\-]+)(sie|seit|ihn|ihm|haben|besitzen|sein|kriegen|nehmen|welche|jenes|von|auf|gegen|nach|das|sein|der|und|fuer|ersten|leicht|meinem|zum|aus|dem|blitzlicht|alle|grosse|zed|ich|sed|blitzen)([.\\/ \\-]+|$)', 1, 1, 1, 'Removes many german releases.'),
 (100037, 'alt.binaries.*', '[aeiouy]{4,80}', 1, 1, 0, 'Removes multiple vowels strung together. See: http://blog.phile.biz/post/39106364519/useful-blacklist-rules'),
-(100040, 'alt.binaries.*', 'AutoRarPar\\d|Password', 1, 1, 0, 'Removes releases with AutoRarPar\\d in the name.'),
-(100043, 'alt.binaries.*', 'L.Joe@no-mans-land.com|Firestorm2012|#cripples', 2, 1, 0, 'foreign'),
+(100040, 'alt.binaries.*', 'AutoRarPar\\d|Password', 1, 1, 1, 'Removes releases with AutoRarPar\\d in the name.'),
+(100043, 'alt.binaries.*', 'L.Joe@no-mans-land.com|Firestorm2012|#cripples', 2, 1, 1, 'foreign'),
 (100044, 'alt.binaries.*', 'NoTHing|9NoTHing|EveryFinG', 1, 1, 0, '');
