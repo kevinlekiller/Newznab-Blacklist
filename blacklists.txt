@@ -76,13 +76,13 @@ alt.binaries.*    ^[a-z0-9]{1,80}([0-9-]+$|$)    subject black    Hashed Release
 alt.binaries.*    [aeiouy]{4,80}    subject black    Removes multiple vowels strung together
 
 
-alt.binaries.cores    xxx    subject black    Removes XXX
+alt.binaries.cores    xxx|XXX    subject black    Removes XXX
 
 
-alt.binaries.ghosts    xxx    subject black    Removes XXX
+alt.binaries.ghosts    xxx|XXX    subject black    Removes XXX
 
 
-alt.binaries.mom    xxx    subject black    Removes XXX
+alt.binaries.mom    xxx|XXX    subject black    Removes XXX
 
 
 alt.binaries.multimedia    nosendemails@me.com|The Phantom|xslidian@hmlt|tim96|GeorgBaer|knt    poster black    Blocking junk posters in multimedia

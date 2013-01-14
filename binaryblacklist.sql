@@ -41,9 +41,9 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100056, 'alt.binaries.*', '^[a-z0-9]{20}', 1, 1, 0, 'Hashed releases.'),
 (100057,'alt.binaries.*','^[a-z0-9]{1,80}([0-9-]+$|$)', 1,1,0,'Hashed Releases.'),
 (100058, 'alt.binaries.*', '[aeiouy]{4,80}', 1, 1, 0, 'Removes multiple vowels strung together.'),
-(100065, 'alt.binaries.cores', 'xxx', 1, 1, 0, 'Removes XXX.'),
-(100066, 'alt.binaries.ghosts', 'xxx', 1, 1, 0, 'removes xxx'),
-(100067, 'alt.binaries.mom', 'xxx', 1, 1, 0, 'Removes XXX.'),
+(100065, 'alt.binaries.cores', 'xxx|XXX', 1, 1, 0, 'Removes XXX.'),
+(100066, 'alt.binaries.ghosts', 'xxx|XXX', 1, 1, 0, 'removes xxx'),
+(100067, 'alt.binaries.mom', 'xxx|XXX', 1, 1, 0, 'Removes XXX.'),
 (100075, 'alt.binaries.multimedia', 'nosendemails@me.com|The Phantom|xslidian@hmlt|tim96|GeorgBaer|knt', 2, 1, 0, 'Blocking junk posters in multimedia.'),
 (100076, 'alt.binaries.movies.xvid', 'theknife', 2, 1, 0, 'Blocking junk posters in xvid.'),
 (100077, 'alt.binaries.tv', '6UL85|XA7MY|36CLX|Y642D|5SC5F|674XL', 1, 1, 0, 'Blocks these posts in tv.');
