@@ -17,10 +17,9 @@ CREATE TABLE IF NOT EXISTS `binaryblacklist` (
 INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `status`, `description`) VALUES
 (1,'alt.binaries.boneless','usenet-4all|u4all|usenet4all', 1,2,0,'only allow u4all posts in boneless'),
 (100000,'alt.binaries.*','french|german|danish|spanish|flemish|dutch|swedish|swesub|deutsch|nl\\.?sub|norwegian|\\.ita\\.',1,1,0,'Blocks non-english language releases.'),
-(100001,'alt.binaries.*','Serbian|FRENCH|GERMAN|NORWEGIAN|Turkish|korsub|\\.japanese\\.|\\.GER\\.|ita-eng|FLEMISH', 1,1,0,'Blocks non-english language releases.'),
+(100001,'alt.binaries.*','Serbian|FRENCH|GERMAN|NORWEGIAN|Turkish|korsub|\\.japanese\\.|\\.GER\\.|ita-eng|FLEMISH|DKsubs', 1,1,0,'Blocks non-english language releases.'),
 (100002, 'alt.binaries.*', '[-.](FR|DE|ITA)[-.]', 1, 1, 0, 'Block Foreign Abbreviations'),
-(100003, 'alt.binaries.*', '(^|[.\\/ \\-]+)(sie|seit|ihn|ihm|haben|besitzen|sein|kriegen|nehmen|welche|jenes|von|auf|gegen|nach|das|sein|der|und|fuer|ersten|leicht|meinem|zum|aus|dem|blitzlicht|alle|grosse|zed|ich|sed|blitzen)([.\\/ \\-]+|$)', 1, 1, 0, 'Removes many german releases.'),
-(100004, 'alt.binaries.*', 'CPP-Gebruiker|L.Joe@no-mans-land.com|Firestorm2012', 2, 1, 0, 'Blocks foreign posters.'),
+(100003, 'alt.binaries.*', 'CPP-Gebruiker|L.Joe@no-mans-land.com|Firestorm2012|#cripples', 2, 1, 0, 'Blocks foreign posters.'),
 (100010, 'alt.binaries.*', 'DEFA|Knochen|Giro|iRLS\\\\HYBRiS|Snoballkrigen!ATKGalleria|RealCo|[MP4SUX]|CytSuNee|NZBRoyalty', 1, 1, 0, 'Blocking various.'),
 (100011, 'alt.binaries.*', 'CowboyUp26|gr4ndstre4m|CowboyUp2012|trein', 1, 1, 0, 'Blocking various.'),
 (100012, 'alt.binaries.*', 'TrollHD|damike99|iMPACT|AVIGUY', 1, 1, 0, 'Blocking various.'),

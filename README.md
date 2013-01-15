@@ -15,6 +15,8 @@ To import the blacklist, from a command where the blacklist is, type: mysql --us
 
 You can also use phpmyadmin to backup/import.
 
+Sy recommends not enabling the hashed ones.
+
 ---------------------------------------------------------------------------------------------------------------------
 
 Thanks to nivong for additions.
