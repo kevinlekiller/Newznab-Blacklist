@@ -58,7 +58,7 @@ alt.binaries.*    Password    subject black    Blocking passwords
 alt.binaries.*    Keygen    subject black    Blocking keygens
 
 
-alt.binaries.*    AutoRarPar\\d    subject black    Removes releases with AutoRarPar\\d in the name
+alt.binaries.*    AutoRarPar\d    subject black    Removes releases with AutoRarPar\d in the name
 
 
 alt.binaries.*    ^[^.^ ]{10,20}$    subject black    Hashed Releases
