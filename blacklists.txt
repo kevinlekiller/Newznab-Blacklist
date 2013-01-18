@@ -88,4 +88,4 @@ alt.binaries.multimedia    nosendemails@me.com|The Phantom|xslidian@hmlt|tim96|G
 alt.binaries.movies.xvid    theknife    poster black    Blocking junk posters in xvid
 
 
-alt.binaries.tv    6UL85|XA7MY|36CLX|Y642D|5SC5F|674XL    subject black    Blocks these posts in tv
+alt.binaries.tv    6UL85|XA7MY|36CLX|Y642D|5SC5F|674XL|D3YL1    subject black    Blocks these posts in tv
