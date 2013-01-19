@@ -13,7 +13,7 @@ alt.binaries.*    [-.](FR|DE|ITA)[-.]    sunject black    Block Foreign Abbrevia
 alt.binaries.*    CPP-Gebruiker|L.Joe@no-mans-land.com|Firestorm2012|#cripples    poster black    Blocks foreign posters
 
 
-alt.binaries.*    DEFA|Knochen|Giro|iRLS\\\\HYBRiS|Snoballkrigen!ATKGalleria|RealCo|[MP4SUX]|CytSuNee|NZBRoyalty    sunject black    Blocking various
+alt.binaries.*    DEFA|Knochen|Giro|iRLS\\\\HYBRiS|Snoballkrigen!ATKGalleria|RealCo|MP4SUX|CytSuNee|NZBRoyalty    sunject black    Blocking various
 
 
 alt.binaries.*    CowboyUp26|gr4ndstre4m|CowboyUp2012|trein    subject black    Blocking various

@@ -20,7 +20,7 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100001,'alt.binaries.*','Serbian|FRENCH|GERMAN|NORWEGIAN|Turkish|korsub|\\.japanese\\.|\\.GER\\.|ita-eng|FLEMISH|DKsubs', 1,1,0,'Blocks non-english language releases.'),
 (100002, 'alt.binaries.*', '[-.](FR|DE|ITA)[-.]', 1, 1, 0, 'Block Foreign Abbreviations'),
 (100003, 'alt.binaries.*', 'CPP-Gebruiker|L.Joe@no-mans-land.com|Firestorm2012|#cripples', 2, 1, 0, 'Blocks foreign posters.'),
-(100010, 'alt.binaries.*', 'DEFA|Knochen|Giro|iRLS\\\\HYBRiS|Snoballkrigen!ATKGalleria|RealCo|[MP4SUX]|CytSuNee|NZBRoyalty', 1, 1, 0, 'Blocking various.'),
+(100010, 'alt.binaries.*', 'DEFA|Knochen|Giro|iRLS\\\\HYBRiS|Snoballkrigen!ATKGalleria|RealCo|MP4SUX|CytSuNee|NZBRoyalty', 1, 1, 0, 'Blocking various.'),
 (100011, 'alt.binaries.*', 'CowboyUp26|gr4ndstre4m|CowboyUp2012|trein', 1, 1, 0, 'Blocking various.'),
 (100012, 'alt.binaries.*', 'TrollHD|damike99|iMPACT|AVIGUY', 1, 1, 0, 'Blocking various.'),
 (100013, 'alt.binaries.*', 'NoTHing|9NoTHing|EveryFinG', 1, 1, 0, 'Blocking various.'),
