@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS `binaryblacklist` (
 --
 
 INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `status`, `description`) VALUES
-(1, 'alt.binaries.boneless','usenet-4all|u4all|usenet4all', 1,2,0,'only allow u4all posts in boneless'),
-(100000, 'alt.binaries.*','danish|deutsch|dutch|dksubs|flemish|french|hebrew|german|ita-eng|korsub|norwegian|serbian|spanish|spanisch|swedish|swesub|turkish|nl\\.?sub|\\.ita\\.|\\.japanese\\.', 1,1,0,'Blocks non-english language releases.'),
-(100001, 'alt.binaries.*','Danish|Deutsch|Dutch|DKsubs|Flemish|French|Hebrew|German|KorSub|Norwegian|Serbian|Spanish|Spanisch|Swedish|SweSUB|Turkish|\\.Japanese\\.', 1,1,0,'Blocks non-english language releases.'),
-(100002, 'alt.binaries.*','DANiSH|DEUTSCH|DUTCH|DKSUBS|FLEMISH|FRENCH|HEBREW|GERMAN|KORSUB|NORWEGIAN|SERBIAN|SPANISH|SPANiSH|SWEDISH|SWEDiSH|SWESUB|TURKSIH|\\.GER\\|\\.JAPENESE\\.', 1,1,0,'Blocks non-english language releases.'),
+(1, 'alt.binaries.boneless', 'usenet-4all|u4all|usenet4all', 1,2,0, 'only allow u4all posts in boneless'),
+(100000, 'alt.binaries.*', 'danish|deutsch|dutch|dksubs|flemish|french|hebrew|german|ita-eng|korsub|norwegian|serbian|spanish|spanisch|swedish|swesub|turkish|nl\\.?sub|\\.ita\\.|\\.japanese\\.', 1,1,0, 'Blocks non-english language releases.'),
+(100001, 'alt.binaries.*', 'Danish|Deutsch|Dutch|DKsubs|Flemish|French|Hebrew|German|KorSub|Norwegian|Serbian|Spanish|Spanisch|Swedish|SweSUB|Turkish|\\.Japanese\\.', 1,1,0, 'Blocks non-english language releases.'),
+(100002, 'alt.binaries.*', 'DANiSH|DEUTSCH|DUTCH|DKSUBS|FLEMISH|FRENCH|HEBREW|GERMAN|KORSUB|NORWEGIAN|SERBIAN|SPANISH|SPANiSH|SWEDISH|SWEDiSH|SWESUB|TURKSIH|\\.GER\\|\\.JAPENESE\\.', 1,1,0, 'Blocks non-english language releases.'),
 (100003, 'alt.binaries.*', '[-.](DE|FR|ITA|NL)[-.]', 1, 1, 0, 'Block Foreign Abbreviations'),
 (100004, 'alt.binaries.*', 'CPP-Gebruiker|L.Joe@no-mans-land.com|Firestorm2012|#cripples', 2, 1, 0, 'Blocks foreign posters.'),
 (100005, 'alt.binaries.*', 'DUBBED|dubbed', 1, 1, 0, 'Blocks dubbed releases.'),
@@ -26,7 +26,7 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100011, 'alt.binaries.*', 'CowboyUp26|gr4ndstre4m|CowboyUp2012|trein', 1, 1, 0, 'Blocking various.'),
 (100012, 'alt.binaries.*', 'TrollHD|damike99|iMPACT|AVIGUY', 1, 1, 0, 'Blocking various.'),
 (100013, 'alt.binaries.*', 'NoTHing|9NoTHing|EveryFinG', 1, 1, 0, 'Blocking various.'),
-(100014, 'alt.binaries.*','NovaRip', 1, 1, 0, 'Blocking various.'),
+(100014, 'alt.binaries.*', 'NovaRip', 1, 1, 0, 'Blocking various.'),
 (100015, 'alt.binaries.*', '6UL85|XA7MY|36CLX|Y642D|5SC5F|674XL|D3YL1|HWP6B', 1, 1, 0, 'Blocking various.'),
 (100020, 'alt.binaries.*', 'dvd|DVD|dvdrip|DVDRip|dvdr|DVDR|DVDr|dvd-r|dvd-rip|DVD-Rip|DVDRip', 1, 1, 0, 'Blocking DVDs'),
 (100021, 'alt.binaries.*', 'xvid|XVID|Xvid|divx|DivX|DIVX|480p|320p', 1, 1, 0, 'Blocking xvid encodes.'),
@@ -41,7 +41,7 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100050, 'alt.binaries.*', 'AutoRarPar\\d', 1, 1, 0, 'Removes releases with AutoRarPar\\d in the name.'),
 (100055, 'alt.binaries.*', '^[^.^ ]{10,20}$', 1, 1, 0, 'Hashed Releases.'),
 (100056, 'alt.binaries.*', '^[a-z0-9]{20}', 1, 1, 0, 'Hashed releases.'),
-(100057, 'alt.binaries.*','^[a-z0-9]{1,80}([0-9-]+$|$)', 1,1,0,'Hashed Releases.'),
+(100057, 'alt.binaries.*', '^[a-z0-9]{1,80}([0-9-]+$|$)', 1,1,0, 'Hashed Releases.'),
 (100058, 'alt.binaries.*', '[aeiouy]{4,80}', 1, 1, 0, 'Removes multiple vowels strung together.'),
 (100065, 'alt.binaries.cores', 'xxx|XXX', 1, 1, 0, 'Removes XXX.'),
 (100066, 'alt.binaries.ghosts', 'xxx|XXX', 1, 1, 0, 'removes xxx'),
