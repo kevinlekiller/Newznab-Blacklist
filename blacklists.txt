@@ -34,7 +34,7 @@ alt.binaries.*    NoTHing|9NoTHing|EveryFinG    subject black    Blocking variou
 alt.binaries.*    NovaRip     subject black    Blocking various
 
 
-alt.binaries.tv    6UL85|XA7MY|36CLX|Y642D|5SC5F|674XL|D3YL1    subject black    Blocking various
+alt.binaries.*    6UL85|XA7MY|36CLX|Y642D|5SC5F|674XL|D3YL1    subject black    Blocking various
 
 
 alt.binaries.*    dvd|DVD|dvdrip|DVDRip|dvdr|DVDR|DVDr|dvd-r|dvd-rip|DVD-Rip|DVDRip    subject black    Blocking DVDs
