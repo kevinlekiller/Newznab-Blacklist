@@ -1,73 +1,73 @@
 alt.binaries.boneless    usenet-4all|u4all|usenet4all    subject white    only allow u4all posts in boneless
 
 
-alt.binaries.*    danish|deutsch|dutch|dksubs|flemish|french|hebrew|german|ita-eng|korsub|norwegian|serbian|spanish|spanisch|swedish|swesub|turkish|nl\.?sub|\.ita\.|\.japanese\.    subject black    Blocks non-english language releases
+alt.binaries.*    [-.](danish|deutsch|dutch|dksubs|flemish|french|hebrew|german|ita-eng|japenese|japanese|korsub|norwegian|serbian|spanish|spanisch|swedish|swesub|turkish)[-.]    subject black    Blocks non-english language releases
 
 
-alt.binaries.*    Danish|Deutsch|Dutch|DKsubs|Flemish|French|Hebrew|German|KorSub|Norwegian|Serbian|Spanish|Spanisch|Swedish|SweSUB|Turkish|\.Japanese\.    subject black Blocks non-english language releases
+alt.binaries.*   \.ger\\|nl\.?sub|\.ita\.|\.japanese\.    subject black Blocks non-english language releases
 
 
-alt.binaries.*    DANiSH|DEUTSCH|DUTCH|DKSUBS|FLEMISH|FRENCH|HEBREW|GERMAN|KORSUB|NORWEGIAN|SERBIAN|SPANISH|SPANiSH|SWEDISH|SWEDiSH|SWESUB|TURKSIH|\.GER\|\.JAPENESE\.    subject black Blocks non-english language releases
+alt.binaries.*    [-.](bl|cz|es|fr|ger|ita|kor|nl|pl)[-.]    sunject black    Block Foreign Abbreviations
 
 
-alt.binaries.*    [-.](DE|FR|ITA|NL)[-.]    sunject black    Block Foreign Abbreviations
+alt.binaries.*    dubbed    subject black    Blocks dubbed releases
 
 
-alt.binaries.*    CPP-Gebruiker|L.Joe@no-mans-land.com|Firestorm2012|#cripples    poster black    Blocks foreign posters
+alt.binaries.*    cpp-gebruiker|l.joe@no-mans-land.com|firestorm2012|#cripples    poster black    Blocks foreign posters
 
 
-alt.binaries.*    DUBBED|dubbed    subject black    Blocks dubbed releases
+alt.binaries.*    defa|knochen|giro|irls\\\\hybris|snoballkrigen!atkgalleria|realco|mp4sux|cytsunee|nzbroyalty    sunject black    Blocking various
 
 
-alt.binaries.*    DEFA|Knochen|Giro|iRLS\\HYBRiS|Snoballkrigen!ATKGalleria|RealCo|MP4SUX|CytSuNee|NZBRoyalty    sunject black    Blocking various
+alt.binaries.*    cowboyup26|gr4ndstre4m|cowboyup2012|trein    subject black    Blocking various
 
 
-alt.binaries.*    CowboyUp26|gr4ndstre4m|CowboyUp2012|trein    subject black    Blocking various
+alt.binaries.*    trollhd|damike99|impact|aviguy    subject black    Blocking various
 
 
-alt.binaries.*    TrollHD|damike99|iMPACT|AVIGUY    subject black    Blocking various
+alt.binaries.*    nothing|9nothing|everyfing    subject black    Blocking various
 
 
-alt.binaries.*    NoTHing|9NoTHing|EveryFinG    subject black    Blocking various
+alt.binaries.*    novarip     subject black    Blocking various
 
 
-alt.binaries.*    NovaRip     subject black    Blocking various
+alt.binaries.*    6ul85|xa7my|36clx|y642d|5sc5f|674xl|d3yl1    subject black    Blocking various
 
 
-alt.binaries.*    6UL85|XA7MY|36CLX|Y642D|5SC5F|674XL|D3YL1    subject black    Blocking various
+alt.binaries.*    hdnectar    subject black    Blocks hdnectar.com 1:1 bluray releases
 
 
-alt.binaries.*    dvd|DVD|dvdrip|DVDRip|dvdr|DVDR|DVDr|dvd-r|dvd-rip|DVD-Rip|DVDRip    subject black    Blocking DVDs
+alt.binaries.*    dvd|dvdrip|dvdr|dvd-r|dvd-rip    subject black    Blocking DVDs
 
 
-alt.binaries.*    xvid|XVID|Xvid|divx|DivX|DIVX|480p|320p    subject black    Blocking xvid encodes
+alt.binaries.*    xvid|divx|480p|320p    subject black    Blocking xvid encodes
 
 
-alt.binaries.*    Nintendo|wii|WII|Wii|ps3|PS3|xbox|Xbox|XBOX|nds|PSP|NDS    subject black    Blocking console
+alt.binaries.*    nintendo|wii|ps3|xbox|nds|psp    subject black    Blocking console
 
 
-alt.binaries.*    MacOSX    subject black    Blocking pc
+alt.binaries.*    macosx    subject black    Blocking pc
 
 
-alt.binaries.*    Keygen|KeyGen|KEYGEN|Cracked|Keymaker    subject black    Blocking keygens
+alt.binaries.*    keygen|cracked|keymaker    subject black    Blocking keygens
 
 
-alt.binaries.*    AnDrOiD|ANDROiD|iPhone|iPod|iPad    subject black    Blocking mobile
+alt.binaries.*    android|iphone|ipod|ipad    subject black    Blocking mobile
 
 
-alt.binaries.*    ANZAC|AFC|AFL|BCS|CONCACAF|EUFA|FIFA|GAA|IIHF|IPL|MLB|MLS|NASCAR|NBA|NCAA|NFL|NHL|NRL|NRB|Olympics|PBA|UAAP    subject black    Blocking sports
+alt.binaries.*    anzac|afc|afl|bcs|concacaf|eufa|fida|gaa|iihf|ipl|mlb|mls|nascar|nba|ncaa|nfl|nhl|nrl|nrb|olympics|pba|uaap    subject black    Blocking sports
 
 
-alt.binaries.*    Liga    subject black    Blocking foreign sports
+alt.binaries.*    liga    subject black    Blocking foreign sports
 
 
-alt.binaries.*    TheMaker|gilf|nomytnopyht|lordsofusenet|klaus|ihate|aart|my2cents|ISNOGOOD|Captain Jack|seizoen    poster black    Blocking virus posters
+alt.binaries.*    themaker|gilf|nomytnopyht|lordsofusenet|klaus|ihate|aart|my2cents|isnogood|captain jack|seizoen    poster black    Blocking virus posters
 
 
-alt.binaries.*    Password|password    subject black    Blocking passwords
+alt.binaries.*    \[password\]    subject black    Blocking passwords
 
 
-alt.binaries.*    AutoRarPar\d    subject black    Removes releases with AutoRarPar\d in the name
+alt.binaries.*    autorarpar\d    subject black    Removes releases with AutoRarPar\d in the name
 
 
 alt.binaries.*    ^[^.^ ]{10,20}$    subject black    Hashed Releases
@@ -82,25 +82,16 @@ alt.binaries.*    ^[a-z0-9]{1,80}([0-9-]+$|$)    subject black    Hashed Release
 alt.binaries.*    [aeiouy]{4,80}    subject black    Removes multiple vowels strung together
 
 
-alt.binaries.cores    xxx|XXX    subject black    Removes XXX
+alt.binaries.*    imageset    subject black    Removes XXX Imagesets
 
 
-alt.binaries.ghosts    xxx|XXX    subject black    Removes XXX
+alt.binaries.*    \.+xxx\.+    subject black    Removes XXX scene releases.
 
 
-alt.binaries.mom    xxx|XXX    subject black    Removes XXX
+alt.binaries.*    xxx    subject black    Removes XXX non scene releases (use with caution, can remove wanted releases).
 
 
-alt.binaries.hdtv    xxx|XXX    subject black    Removes XXX
-
-
-alt.binaries.movies.divx    xxx|XXX    subject black    Removes XXX
-
-
-alt.binaries.multimedia    xxx|XXX    subject black    Removes XXX
-
-
-alt.binaries.multimedia    nosendemails@me.com|The Phantom|xslidian@hmlt|tim96|GeorgBaer|knt    poster black    Blocking junk posters in multimedia
+alt.binaries.multimedia    nosendemails@me.com|the phantom|xslidian@hmlt|tim96|georgbaer|knt    poster black    Blocking junk posters in multimedia
 
 
 alt.binaries.movies.xvid    theknife    poster black    Blocking junk posters in xvid
