@@ -16,7 +16,10 @@ alt.binaries.*    dubbed    subject black    Blocks dubbed releases
 alt.binaries.*    cpp-gebruiker|l.joe@no-mans-land.com|firestorm2012|#cripples    poster black    Blocks foreign posters
 
 
-alt.binaries.*    defa|nzbroyalty    sunject black    Blocking various
+alt.binaries.*    realco    subject black    Blocks foreign subjects
+
+
+alt.binaries.*    nzbroyalty    sunject black    Blocking various
 
 
 alt.binaries.*    cowboyup26|gr4ndstre4m|cowboyup2012|trein    subject black    Blocking various
