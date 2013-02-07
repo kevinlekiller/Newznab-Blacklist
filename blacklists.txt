@@ -16,7 +16,7 @@ alt.binaries.*    dubbed    subject black    Blocks dubbed releases
 alt.binaries.*    cpp-gebruiker|l.joe@no-mans-land.com|firestorm2012|#cripples    poster black    Blocks foreign posters
 
 
-alt.binaries.*    defa|knochen|giro|irls\\\\hybris|snoballkrigen!atkgalleria|realco|mp4sux|cytsunee|nzbroyalty    sunject black    Blocking various
+alt.binaries.*    defa|nzbroyalty    sunject black    Blocking various
 
 
 alt.binaries.*    cowboyup26|gr4ndstre4m|cowboyup2012|trein    subject black    Blocking various
@@ -25,7 +25,7 @@ alt.binaries.*    cowboyup26|gr4ndstre4m|cowboyup2012|trein    subject black    
 alt.binaries.*    trollhd|damike99|impact|aviguy    subject black    Blocking various
 
 
-alt.binaries.*    nothing|9nothing|everyfing    subject black    Blocking various
+alt.binaries.*    nothing|9nothing    subject black    Blocking various
 
 
 alt.binaries.*    novarip     subject black    Blocking various
@@ -34,7 +34,10 @@ alt.binaries.*    novarip     subject black    Blocking various
 alt.binaries.*    6ul85|xa7my|36clx|y642d|5sc5f|674xl|d3yl1    subject black    Blocking various
 
 
-alt.binaries.*    hdnectar    subject black    Blocks hdnectar.com 1:1 bluray releases
+alt.binaries.*    hdnectar|nzbcave    subject black    Blocks hdnectar.com 1:1 bluray releases
+
+
+alt.binaries.*    cytsunee|mp4sux|\[everyfing\]    subject black    Blocks p2p posters
 
 
 alt.binaries.*    dvd|dvdrip|dvdr|dvd-r|dvd-rip    subject black    Blocking DVDs
