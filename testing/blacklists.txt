@@ -1,105 +1,16 @@
-alt.binaries.boneless    usenet-4all|u4all|usenet4all    subject white    only allow u4all posts in boneless
+alt.binaries.*		[ -.](espn|ultimate.?fighter|mlb|mls|mfc|mma|ncaa|nba|nbl|nfl|nhl|pga|tna|ufc|us.?open|wec|wcw|world.?series|wwe|wwf)[ -.].*((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|vcd|xvi ?d)		subject black		Blacklists american sports.
 
 
-alt.binaries.*    [-.](danish|deutsch|dutch|dksubs|flemish|french|hebrew|german|ita-eng|japenese|japanese|korsub|norwegian|serbian|spanish|spanisch|swedish|swesub|turkish)[-.]    subject black    Blocks non-english language releases
+alt.binaries.*		[ -.](anz|bundesliga|cfb|epl|fa.?cup|la.?liga|netball|nrl|rugby|serie.?a|supercup|super.?league|uefa|wimbledon)[ -.].*((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|xvid)		subject black		Blacklists european sports.
 
 
-alt.binaries.*   \.ger\\|nl\.?sub|\.ita\.|\.japanese\.    subject black Blocks non-english language releases
+alt.binaries.*		[ -.](afl|fifa|fina|gymanstics|hdnet.?fights|iihf|league(.?challenge|.?cup|.?soccer)|olympics?|playoffs|wba|world.?championships?|world cup)[ -.].*((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|xvid)		subject black		Blacklists various sports.
 
 
-alt.binaries.*    [-.](bl|cz|es|fr|ger|ita|kor|nl|pl)[-.]    sunject black    Block Foreign Abbreviations
+alt.binaries.*		[ -.](bmx|motogp|sbk|superbike|tour.?de.?france|la.?vuelta|wsbk).*[ -.]((480|720|1080)(i|p)|(bi|motor)?cycle?(ing)?|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|round|series|xvid)		subject black		Blacklists bike racing.
 
 
-alt.binaries.*    dubbed    subject black    Blocks dubbed releases
+alt.binaries.*		[ -.](ama.?supercross|dtm|f1.?legends|fia|formula(.?one|.?1|.?honda|.?renault)|gp3||grand.?prix|indycar||nascar|rally(.?challenge|.?championship)|supercars?|wrc|wtcc).*[ -.]((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|round|series|xvid)		subject black		Blacklists car racing.
 
 
-alt.binaries.*    cpp-gebruiker|l.joe@no-mans-land.com|firestorm2012|#cripples    poster black    Blocks foreign posters
-
-
-alt.binaries.*    realco    subject black    Blocks foreign subjects
-
-
-alt.binaries.*    nzbroyalty    sunject black    Blocking various
-
-
-alt.binaries.*    cowboyup26|gr4ndstre4m|cowboyup2012|trein    subject black    Blocking various
-
-
-alt.binaries.*    trollhd|damike99|impact|aviguy    subject black    Blocking various
-
-
-alt.binaries.*    nothing|9nothing    subject black    Blocking various
-
-
-alt.binaries.*    novarip     subject black    Blocking various
-
-
-alt.binaries.*    6ul85|xa7my|36clx|y642d|5sc5f|674xl|d3yl1    subject black    Blocking various
-
-
-alt.binaries.*    hdnectar|nzbcave    subject black    Blocks hdnectar.com 1:1 bluray releases
-
-
-alt.binaries.*    cytsunee|mp4sux|\[everyfing\]    subject black    Blocks p2p posters
-
-
-alt.binaries.*    dvd|dvdrip|dvdr|dvd-r|dvd-rip    subject black    Blocking DVDs
-
-
-alt.binaries.*    xvid|divx|480p|320p    subject black    Blocking xvid encodes
-
-
-alt.binaries.*    nintendo|wii|ps3|xbox|nds|psp    subject black    Blocking console
-
-
-alt.binaries.*    macosx    subject black    Blocking pc
-
-
-alt.binaries.*    keygen|cracked|keymaker    subject black    Blocking keygens
-
-
-alt.binaries.*    android|iphone|ipod|ipad    subject black    Blocking mobile
-
-
-alt.binaries.*    anzac|afc|afl|bcs|concacaf|eufa|fida|gaa|iihf|ipl|mlb|mls|nascar|nba|ncaa|nfl|nhl|nrl|nrb|olympics|pba|uaap    subject black    Blocking sports
-
-
-alt.binaries.*    liga    subject black    Blocking foreign sports
-
-
-alt.binaries.*    themaker|gilf|nomytnopyht|lordsofusenet|klaus|ihate|aart|my2cents|isnogood|captain jack|seizoen    poster black    Blocking virus posters
-
-
-alt.binaries.*    \[password\]    subject black    Blocking passwords
-
-
-alt.binaries.*    autorarpar\d    subject black    Removes releases with AutoRarPar\d in the name
-
-
-alt.binaries.*    ^[^.^ ]{10,20}$    subject black    Hashed Releases
-
-
-alt.binaries.*    ^[a-z0-9]{20}    subject black    Hashed releases
-
-
-alt.binaries.*    ^[a-z0-9]{1,80}([0-9-]+$|$)    subject black    Hashed Releases
-
-
-alt.binaries.*    [aeiouy]{4,80}    subject black    Removes multiple vowels strung together
-
-
-alt.binaries.*    imageset    subject black    Removes XXX Imagesets
-
-
-alt.binaries.*    \.+xxx\.+    subject black    Removes XXX scene releases.
-
-
-alt.binaries.*    xxx    subject black    Removes XXX non scene releases (use with caution, can remove wanted releases).
-
-
-alt.binaries.multimedia    nosendemails@me.com|the phantom|xslidian@hmlt|tim96|georgbaer|knt    poster black    Blocking junk posters in multimedia
-
-
-alt.binaries.movies.xvid    theknife    poster black    Blocking junk posters in xvid
-
-
+alt.binaries.*		[ -.](horse.?racing|kentucky.?derby).*[ -.]((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|xvid)		subject black		Blacklists various racing.
