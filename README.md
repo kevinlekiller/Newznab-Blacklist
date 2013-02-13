@@ -3,6 +3,8 @@ Newznab-Blacklist
 
 Blacklist for Newznab.
 
+UPDATE: 13 FEB 2013 : Old is the old blacklist, Testing will be a blacklist that will take more time to make but will have less false positives.
+
 You can use the blacklists.txt file to manually add blacklists into newznab, or use the SQL file to import them all in 1 go.
 
 All blacklists are disabled by default, enable them in admin - view black list, click the edit button to the right of the blacklist, click enable and save.
