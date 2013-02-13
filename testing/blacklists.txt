@@ -1,16 +1,4 @@
-alt.binaries.*		[ -.](espn|ultimate.?fighter|mlb|mls|mfc|mma|ncaa|nba|nbl|nfl|nhl|pga|tna|ufc|us.?open|wec|wcw|world.?series|wwe|wwf)[ -.].*((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|vcd|xvi ?d)		subject black		Blacklists american sports.
+alt.binaries.*		(chinese|danish|deutsch|dutch|flemish|finnish|french|german|hebrew|icelandic|italian|nordic|norwegian|japenese|japanese|serbian|spanish|spanisch|swedish|turkish)[\)]?( -)?[ -.]((19|20)\d\d|(480|720|1080)(i|p)|ac3|(bd|dvd.?|sat|vhs)rip|bluray|board|cracked|custom|\(uncut\)|"|(d|h|p|s)d?tv|dirfix|divx|dl|dub|dts|(h|x).?2?64|incl|ml|nzb|pal|par2|proper|read.?nfo|real|repack|sub|webrip|winall|ws|xvid|xxx)		subject black		Blacklists english releases.
 
 
-alt.binaries.*		[ -.](anz|bundesliga|cfb|epl|fa.?cup|la.?liga|netball|nrl|rugby|serie.?a|supercup|super.?league|uefa|wimbledon)[ -.].*((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|xvid)		subject black		Blacklists european sports.
-
-
-alt.binaries.*		[ -.](afl|fifa|fina|gymanstics|hdnet.?fights|iihf|league(.?challenge|.?cup|.?soccer)|olympics?|playoffs|wba|world.?championships?|world cup)[ -.].*((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|xvid)		subject black		Blacklists various sports.
-
-
-alt.binaries.*		[ -.](bmx|motogp|sbk|superbike|tour.?de.?france|la.?vuelta|wsbk).*[ -.]((480|720|1080)(i|p)|(bi|motor)?cycle?(ing)?|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|round|series|xvid)		subject black		Blacklists bike racing.
-
-
-alt.binaries.*		[ -.](ama.?supercross|dtm|f1.?legends|fia|formula(.?one|.?1|.?honda|.?renault)|gp3||grand.?prix|indycar||nascar|rally(.?challenge|.?championship)|supercars?|wrc|wtcc).*[ -.]((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|round|series|xvid)		subject black		Blacklists car racing.
-
-
-alt.binaries.*		[ -.](horse.?racing|kentucky.?derby).*[ -.]((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|xvid)		subject black		Blacklists various racing.
+alt.binaries.*		[ -.](chinese.subbed|dksubs|fansubs?|hebdub|hebsub|korsub|norsub|nl( -.)?sub(ed|bed|s)?|nlvlaams|plsub|slosinh|swesub|truefrench|vostfr)[-. ]		subject black		Blacklists english subtitled releases.
