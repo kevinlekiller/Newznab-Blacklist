@@ -19,7 +19,7 @@ INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `
 (100002, 'alt.binaries.*', '[ -.](bl|cz|de|es|fr|ger|heb|hu|ita|ko|kor|nl|pl|se)[ -.]((19|20)\\d\\d|(480|720|1080)(i|p)|(bd|dvd.?|sat|vhs)?rip?|(bd|dl)mux|( -.)?(dub|sub)(ed|bed)?|complete|convert|(d|h|p|s)d?tv|dirfix|docu|dual|dvbs|dvdscr|eng|(h|x).?2?64|int(ernal)?|pal|proper|repack|xbox)', 1, 1, 0, 'Blacklists non-english abbreviated releases.'),
 (100003, 'alt.binaries.*', '[ -.]((19|20)\\d\\d|(bd|dvd.?|sat|vhs)?rip?|divx|dts)[ -.](bl|cz|de|es|fr|ger|heb|hu|ita|ko|kor|nl|pl|se)', 1, 1, 0, 'Blacklists non-english abbreviated (reversed) releases.'),
 (100004, 'alt.binaries.*', '[ -.](chinese.subbed|dksubs|fansubs?|hebdub|hebsub|korsub|norsub|nl( -.)?sub(ed|bed|s)?|nlvlaams|plsub|slosinh|swesub|truefrench|vost(fr)?)[ -.]', 1, 1, 0, 'Blacklists non-english subtitled releases.'),
-(100005, 'alt.binaries.*', '[ -._](realco|videomann|vost|nov[ a]+rip)[ -._]', 1, 1, 0, 'Blacklists non-english (release group specific) releases.'),
+(100005, 'alt.binaries.*', '[ -._](4u\\.nl|nov[ a]+rip|realco|videomann|vost)[ -._]', 1, 1, 0, 'Blacklists non-english (release group specific) releases.'),
 (100006, 'alt.binaries.*', '[ -.]((bd|dl)mux|doku|\\[foreign\\]|seizoen|staffel)[ -.]', 1, 1, 0, 'Blacklists non-english (lang specific) releases.'),
 (100020, 'alt.binaries.*', '[ -.](imageset|pictureset|xxx)[ -.]', 1, 1, 0, 'Blacklists porn releases.'),
 (100030, 'alt.binaries.*', '[ -](de|es|fr|it|ko|nl|pl|se)[ -]((audiobook|cuefix|bonus|bootleg|dirfix|nfofix|dvb|promo|readnfo|real|rerip|repack|proper)[ -])?\\d?(bluray|hddvd|dvd|ddc|cd(s|rs|rep)?|mcd|(\\d_)?(vls|m?lp|ep|vinyl))', 1, 1, 0, 'Blacklists music, music video etc releases.'),

@@ -10,7 +10,7 @@ alt.binaries.*		[ -.]((19|20)\d\d|(bd|dvd.?|sat|vhs)?rip?|divx|dts)[ -.](bl|cz|d
 alt.binaries.*		[ -.](chinese.subbed|dksubs|fansubs?|hebdub|hebsub|korsub|norsub|nl( -.)?sub(ed|bed|s)?|nlvlaams|plsub|slosinh|swesub|truefrench|vost(fr)?)[ -.]		subject black		Blacklists non-english subtitled releases.
 
 
-alt.binaries.*		[ -._](realco|videomann|vost|nov[ a]+rip)[ -._]		subject black		Blacklists non-english (release group specific) releases.
+alt.binaries.*		[ -._](4u\.nl|nov[ a]+rip|realco|videomann|vost)[ -._]		subject black		Blacklists non-english (release group specific) releases.
 
 
 alt.binaries.*		[ -.]((bd|dl)mux|doku|\[foreign\]|seizoen|staffel)[ -.]		subject black		Blacklists non-english (lang specific) releases.
