@@ -8,17 +8,19 @@ CREATE TABLE IF NOT EXISTS `binaryblacklist` (
   `status` int(11) unsigned NOT NULL DEFAULT '1',
   `description` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1000041 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1000100;
 
 --
 -- Dumping data for table `binaryblacklist`
 --
 
 INSERT INTO `binaryblacklist` (`ID`, `groupname`, `regex`, `msgcol`, `optype`, `status`, `description`) VALUES
-(100001, 'alt.binaries.*', '(chinese|danish|deutsch|dutch|flemish|finnish|french|german|hebrew|icelandic|italian|nordic|norwegian|japenese|japanese|serbian|spanish|spanisch|swedish|turkish)[\\)]?( -)?[ -.]((19|20)\\d\\d|(480|720|1080)(i|p)|ac3|(bd|dvd.?|sat|vhs)rip|bluray|board|cracked|custom|\\(uncut\\)|"|(d|h|p|s)d?tv|dirfix|divx|dl|dub|dts|(h|x).?2?64|incl|ml|nzb|pal|par2|proper|read.?nfo|real|repack|sub|webrip|winall|ws|xvid)', 1, 1, 0, 'Blacklists non-english releases.'),
-(100002, 'alt.binaries.*', '[ -.](de|es|fr|ger|ita|ko|kor|nl|pl|se)[ -.]((19|20)\\d\\d|(480|720|1080)(i|p)|(bd|dvd.?|sat|vhs)?rip?|(bd|dl)mux|( -.)?(dub|sub)(ed|bed)?|complete|convert|(d|h|p|s)d?tv|dirfix|docu|dual|dvbs|dvdscr|eng|(h|x).?2?64|int(ernal)?|pal|proper|repack)', 1, 1, 0, 'Blacklists non-english abbreviated releases.'),
-(100003, 'alt.binaries.*', '[ -.]((19|20)\\d\\d|(bd|dvd.?|sat|vhs)?rip?|divx|dts)[ -.](bl|fr|es|ita)', 1, 1, 0, 'Blacklists non-english abbreviated(reversed) releases.'),
+(100001, 'alt.binaries.*', '(chinese|danish|deutsch|dutch|flemish|finnish|french|german|hebrew|icelandic|italian|nordic|norwegian|japenese|japanese|serbian|spanish|spanisch|swedish|turkish)[\\)]?( -)?[ -.]((19|20)\\d\\d|(480|720|1080)(i|p)|ac3|(bd|dvd.?|sat|vhs)rip|bluray|board|cracked|retail|unrated|custom|\\(uncut\\)|"|(d|h|p|s)d?tv|dirfix|divx|dl|dub|dts|(bd.)?(h|x).?2?64|incl|ml|nzb|pal|par2|proper|read.?nfo|real|repack|doc|sub|webrip|winall|ws|xvid)', 1, 1, 0, 'Blacklists non-english releases.'),
+(100002, 'alt.binaries.*', '[ -.](bl|cz|de|es|fr|ger|heb|hu|ita|ko|kor|nl|nz|pl|se)[ -.]((19|20)\\d\\d|(480|720|1080)(i|p)|(bd|dvd.?|sat|vhs)?rip?|(bd|dl)mux|( -.)?(dub|sub)(ed|bed)?|xbox|complete|convert|(d|h|p|s)d?tv|dirfix|docu|dual|dvbs|dvdscr|eng|(h|x).?2?64|int(ernal)?|pal|proper|repack)', 1, 1, 0, 'Blacklists non-english abbreviated releases.'),
+(100003, 'alt.binaries.*', '[ -.]((19|20)\\d\\d|(bd|dvd.?|sat|vhs)?rip?|divx|dts)[ -.](bl|cz|de|es|fr|ger|heb|hu|ita|ko|kor|nl|nz|pl|se)', 1, 1, 0, 'Blacklists non-english abbreviated (reversed) releases.'),
 (100004, 'alt.binaries.*', '[ -.](chinese.subbed|dksubs|fansubs?|hebdub|hebsub|korsub|norsub|nl( -.)?sub(ed|bed|s)?|nlvlaams|plsub|slosinh|swesub|truefrench|vostfr)[-. ]', 1, 1, 0, 'Blacklists non-english subtitled releases.'),
+(100005, 'alt.binaries.*', '[ -.](nov[ a]+rip|realco|videomann)[-. ]', 1, 1, 0, 'Blacklists non-english (release group specific) releases.'),
+(100006, 'alt.binaries.*', '[ -.](seizoen|staffel|doku|(bd|dl)mux|\[foreign\])[-. ]', 1, 1, 0, 'Blacklists non-english (lang specific) releases.'),
 (100020, 'alt.binaries.*', '[ -.](imageset|pictureset|xxx)[ -.]', 1, 1, 0, 'Blacklists porn releases.'),
 (100030, 'alt.binaries.*', '[ -](de|es|fr|it|ko|nl|pl|se)[ -]((audiobook|cuefix|bonus|bootleg|dirfix|nfofix|dvb|promo|readnfo|real|rerip|repack|proper)[ -])?\\d?(bluray|hddvd|dvd|ddc|cd(s|rs|rep)?|mcd|(\\d_)?(vls|m?lp|ep|vinyl))', 1, 1, 0, 'Blacklists music, music video etc releases.'),
 (100040, 'alt.binaries.*', '[ -.](espn|ultimate.?fighter|mlb|mls|mfc|mma|ncaa|nba|nbl|nfl|nhl|pga|tna|ufc|us.?open|wec|wcw|world.?series|wwe|wwf)[ -.].*((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|vcd|xvi ?d)', 1, 1, 0, 'Blacklists american and canadian sports releases.'),
