@@ -1,13 +1,13 @@
-alt.binaries.*		(chinese|danish|deutsch|dutch|flemish|finnish|french|german|hebrew|icelandic|italian|nordic|norwegian|japenese|japanese|serbian|spanish|spanisch|swedish|turkish)[\)]?( -)?[ -.]((19|20)\d\d|(480|720|1080)(i|p)|5\.1|ac3|(bd|dvd.?|hd|sat|vhs|web)rip|(bd.)?(h|x).?2?64|bluray|board|cracked|custom|"|(d|h|p|s)d?tv|dirfix|divx|xvid|dl|doc|dub|dts|dvd(-|sc)?r|fs|incl|int(ernal)?|ml|nzb|pal|par2|proper|read.?nfo|real|repack|retail|sub|svcd|\(uncut\)|unrated|winall|ws)		subject black		Blacklists non-english releases.
+alt.binaries.*		(brazilian|chinese|croatian|danish|deutsch|dutch|estonian|flemish|finnish|french|german|greek|hebrew|icelandic|italian|latin|nordic|norwegian|polish|portuguese|japenese|japanese|russian|serbian|slovenian|spanish|spanisch|swedish|thai|turkish)[\)]?( \-)?[ \-\.]((19|20)\d\d|(480|720|1080)(i|p)|3d|5\.1|dts|ac3|truehd|(bd|dvd|hd|sat|vhs|web)\.?rip|(bd.)?(h|x).?2?64|divx|xvid|bluray|svcd|board|custom|"|(d|h|p|s)d?v?tv|m?dvd(-|sc)?r|int(ernal)?|nzb|par2|\b(((dc|ld|md|ml|dl|hr|se)[.])|(anime\.)|(fs|ws)|dsr|pal|ntsc|iso|complete|cracked|ebook|extended|dirfix|festival|proper|game|limited|read.?nfo|real|rerip|repack|remastered|retail|samplefix|scan|screener|theatrical|uncut|unrated|incl|winall)\b|doku|doc|dub|sub|\(uncut\))		subject black		Blacklists non-english releases.
 
 
-alt.binaries.*		[ -.](bl|cz|de|es|fr|ger|heb|hu|ita|ko|kor|nl|pl|se)[ -.]((19|20)\d\d|(480|720|1080)(i|p)|(bd|dvd.?|sat|vhs)?rip?|(bd|dl)mux|( -.)?(dub|sub)(ed|bed)?|complete|convert|(d|h|p|s)d?tv|dirfix|docu|dual|dvbs|dvdscr|eng|(h|x).?2?64|int(ernal)?|pal|proper|repack|xbox)		subject black		Blacklists non-english abbreviated releases.
+alt.binaries.*		[ -.](bl|cz|de|es|fr|ger|heb|hu|hun|ita|ko|kor|nl|pl|se)[ -.]((19|20)\d\d|(480|720|1080)(i|p)|(bd|dvd.?|sat|vhs)?rip?|(bd|dl)mux|( -.)?(dub|sub)(ed|bed)?|complete|convert|(d|h|p|s)d?tv|dirfix|docu|dual|dvbs|dvdscr|eng|(h|x).?2?64|int(ernal)?|pal|proper|repack|xbox)		subject black		Blacklists non-english abbreviated releases.
 
 
 alt.binaries.*		[ -.]((19|20)\d\d|(bd|dvd.?|sat|vhs)?rip?|custom|divx|dts)[ -.](bl|cz|de|es|fr|ger|heb|hu|ita|ko|kor|nl|pl|se)		subject black		Blacklists non-english abbreviated(reversed) releases.
 
 
-alt.binaries.*		[ -.](chinese.subbed|dksubs|fansubs?|hebdub|hebsub|korsub|norsub|nl( -.)?sub(ed|bed|s)?|nlvlaams|plsub|slosinh|swesub|truefrench|vost(fr)?)[ -.]		subject black		Blacklists non-english subtitled releases.
+alt.binaries.*		[ -.](chinese.subbed|dksubs|fansubs?|finsub|hebdub|hebsub|korsub|norsub|nordicsubs|nl( -.)?sub(ed|bed|s)?|nlvlaams|pldub|plsub|slosinh|swesub|truefrench|vost(fr)?)[ -.]		subject black		Blacklists non-english subtitled releases.
 
 
 alt.binaries.*		[ -._](4u\.nl|nov[ a]+rip|realco|videomann|vost)[ -._]		subject black		Blacklists non-english (release group specific) releases.
