@@ -34,7 +34,7 @@ alt.binaries.*		[ -.](afl|fifa|fina|gymanstics|hdnet.?fights|iihf|league(.?chall
 alt.binaries.*		[ -.](bmx|motogp|sbk|superbike|tour.?de.?france|la.?vuelta|wsbk).*[ -.]((480|720|1080)(i|p)|(bi|motor)?cycle?(ing)?|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|round|series|xvid)		subject black		Blacklists bike racing releases.
 
 
-alt.binaries.*		[ -.](ama.?supercross|dtm|f1.?legends|fia|formula(.?one|.?1|.?honda|.?renault)|gp3||grand.?prix|indycar||nascar|rally(.?challenge|.?championship)|supercars?|wrc|wtcc).*[ -.]((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|round|series|xvid)		subject black		Blacklists car racing releases.
+alt.binaries.*		[ -.](ama.?supercross|dtm|f1.?legends|fia|formula(.?one|.?1|.?honda|.?renault)|gp3|grand.?prix|indycar|nascar|rally(.?challenge|.?championship)|supercars?|wrc|wtcc).*[ -.]((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|round|series|xvid)		subject black		Blacklists car racing releases.
 
 
 alt.binaries.*		[ -.](horse.?racing|kentucky.?derby).*[ -.]((480|720|1080)(i|p)|(d|h|p|s)d?tv|divx|(dvd.?|sat|vhs)rip|(h|x).?264|rac(e|ing)|xvid)		subject black		Blacklists other racing releases.
