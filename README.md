@@ -1,7 +1,10 @@
 Newznab-Blacklist
 =================
 
-Blacklist for Newznab. By https://github.com/thezoggy and kevin123.
+02 MARCH 2013: Added update_parsing_mod.php (requires php 5.4+) and remove_misc_releases.php
+---------------------------------------------------------------------------------------------------------------------
+
+Blacklist for Newznab. By https://github.com/thezoggy and kevin123
 
 UPDATE: 13 FEB 2013 : Old is the old blacklist, Testing will be a blacklist that will take more time to make but will have less false positives.
 
