@@ -1244,7 +1244,7 @@ if ($res)
 						{
 							$matches[2] = '480p';
 						}
-						if($matches[2] == '(640')
+						if($matches[2] == '\(640')
 						{
 							$matches[2] = '480p';
 						}
