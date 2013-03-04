@@ -1256,10 +1256,6 @@ if ($res)
 						{
 							$matches[2] = '480p';
 						}
-						if($matches[2] == '720')
-						{
-							$matches[2] = '720p';
-						}
 						if($matches[2] == '720x480')
 						{
 							$matches[2] = '480p';
@@ -1303,6 +1299,10 @@ if ($res)
 						if($matches[2] == '1920x1080')
 						{
 							$matches[2] = '1080p';
+						}
+						if($matches[2] == '720')
+						{
+							$matches[2] = '720p';
 						}
 						$foundName = $foundName.".".$matches[2];
 					}
@@ -1496,10 +1496,6 @@ if ($res)
 								{
 									$matches[2] = '480p';
 								}
-								if($matches[2] == '720')
-								{
-									$matches[2] = '720p';
-								}
 								if($matches[2] == '720x480')
 								{
 									$matches[2] = '480p';
@@ -1543,6 +1539,10 @@ if ($res)
 								if($matches[2] == '1920x1080')
 								{
 									$matches[2] = '1080p';
+								}
+								if($matches[2] == '720')
+								{
+									$matches[2] = '720p';
 								}
 								$foundName = $foundName.".".$matches[2];
 							}					
@@ -1703,6 +1703,43 @@ if ($res)
 					$methodused = "Nfo 40 LastNfoAttempt 3 (Specific type of NFO)";
 					$foundName = $foundName.".NoGroup";
 					determineCategory($rel,$foundName,$methodused);						
+				}
+				//LastNfoAttempt 4 Iguana NFO's
+				if(preg_match('/\bSupplier.+IGUANA\b/i', $nfo) && $foundName == "")
+				{
+					if(preg_match('/\b([a-z0-9._\-\',;]+(( )| - )[a-z0-9._\-\',;]+)+( )\(?(19|20)\d\d\)?/i',$nfo,$matches))
+					{
+						$foundName = $matches[0];
+						echo "$foundName \n";
+					}
+					if(preg_match('/\s\[\*\] (English|Dutch|French|German|Spanish)\b/i',$nfo,$matches))
+					{
+						$foundName = $foundName.".".$matches[1];
+					}
+					if(preg_match('/\s\[\*\] (DTS 6\.1|DS 5\.1|DS 2\.0|DS 2\.0 MONO)\b/i',$nfo,$matches))
+					{
+						$foundName = $foundName.".".$matches[1];
+					}
+					if(preg_match('/\bFormat.+(DVD(5|9|R)?|(h|x)\.?264)\b/i',$nfo,$matches))
+					{
+						$foundName = $foundName.".".$matches[1];
+					}
+					if(preg_match('/\[(640x.+|1280x.+|1920x.+)\] Resolution\b/i',$nfo,$matches))
+					{
+						if($matches[1] == '640x.+')
+						{
+							$matches[1] = '480p';
+						}
+						if($matches[1] == '1280x.+')
+						{
+							$matches[1] = '720p';
+						}
+						if($matches[1] == '1920x.+')
+						{
+							$matches[1] = '1080p';
+						}
+						$foundName = $foundName.".".$matches[1];
+					}
 				}
 			}
 			
