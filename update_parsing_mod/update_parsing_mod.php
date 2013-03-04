@@ -1672,6 +1672,38 @@ if ($res)
 						}
 					}
 				}
+				//LastNfoAttempt 3 (Specific nfo type where there isn't much info.)
+				if(preg_match('/\b([a-z0-9._\-\',;]+(( )| - )[a-z0-9._\-\',;]+)+( )\(?(19|20)\d\d\)?/i', $nfo) && preg_match('/\b(Brazilian|Chinese|Croatian|Danish|DE|Deutsch|Dutch|Estonian|ES|English|Englisch|Finnish|Flemish|Francais|French|FR|German|Greek|Hebrew|Icelandic|Italian|Japenese|Japan|Japanese|Korean|Latin|Nordic|Norwegian|Polish|Portuguese|Russian|Serbian|Slovenian|Swedish|Spanisch|Spanish|Thai|Turkish)\ (0x0055 MPEG-1 Layer 3|AAC( LC)?|AC-?3|\(AC3|DD5(.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|FLAC|MP3)\ [0-9]{3,5}\ ?kbps\b/i', $nfo) && $foundName == "")
+				{
+					if(preg_match('/\b([a-z0-9._\-\',;]+(( )| - )[a-z0-9._\-\',;]+)+( )\(?(19|20)\d\d\)?/i',$nfo,$matches))
+					{
+						$foundName = $matches[0];
+					}
+					if(preg_match('/\b(Brazilian|Chinese|Croatian|Danish|DE|Deutsch|Dutch|Estonian|ES|English|Englisch|Finnish|Flemish|Francais|French|FR|German|Greek|Hebrew|Icelandic|Italian|Japenese|Japan|Japanese|Korean|Latin|Nordic|Norwegian|Polish|Portuguese|Russian|Serbian|Slovenian|Swedish|Spanisch|Spanish|Thai|Turkish)\ (0x0055 MPEG-1 Layer 3|AAC( LC)?|AC-?3|\(AC3|DD5(.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|FLAC|MP3)\ [0-9]{3,5}\ ?kbps\b/i',$nfo,$matches))
+					{
+						$foundName = $foundName.".".$matches[1];
+						$foundName = $foundName.".".$matches[2];
+					}
+					if(preg_match('/(640x|1280x|1920x)/i',$nfo,$matches))
+					{
+						if($matches[0] == '640x')
+						{
+							$matches[0] = '480p.XVID';
+						}
+						if($matches[0] == '1280x')
+						{
+							$matches[0] = '720p.x264';
+						}
+						if($matches[0] == '1920x')
+						{
+							$matches[0] = '1080p.x264';
+						}
+						$foundName = $foundName.".".$matches[0];
+					}
+					$methodused = "Nfo 40 LastNfoAttempt 3 (Specific type of NFO)";
+					$foundName = $foundName.".NoGroup";
+					determineCategory($rel,$foundName,$methodused);						
+				}
 			}
 			
 			if ($foundName == '' && $debug == true)
