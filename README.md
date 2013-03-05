@@ -1,16 +1,20 @@
 Newznab-Blacklist
 =================
 
-02 MARCH 2013: Added update_parsing_mod.php (requires php 5.4+) and remove_misc_releases.php
+Scripts to clean up your Newznab installation.
 ---------------------------------------------------------------------------------------------------------------------
 
-Blacklist for Newznab. By https://github.com/thezoggy and kevin123
+----------
+BLACKLIST:
+----------
 
-UPDATE: 13 FEB 2013 : Old is the old blacklist, Testing will be a blacklist that will take more time to make but will have less false positives.
+There are 2 blacklists, new (recommended), old (the old blacklists, will not be updated).
 
 You can use the blacklists.txt file to manually add blacklists into newznab, or use the SQL file to import them all in 1 go.
 
 All blacklists are disabled by default, enable them in admin - view black list, click the edit button to the right of the blacklist, click enable and save.
+
+IMPORTING THE BLACKLIST:
 
 (Change root in user=root for your own mysql user in the following commands)
 
@@ -20,7 +24,19 @@ To import the blacklist, from a command where the blacklist is, type: mysql --us
 
 You can also use phpmyadmin to backup/import.
 
-Sy recommends not enabling the hashed ones.
+---------------
+UPDATE PARSING:
+---------------
+
+In this folder there are 2 scripts, update_parsing_mod.php and remove_misc_releases.php.
+
+update_parsing_mod.php will try to fix release names from the "other" categories, remove_misc_releases.php is used to remove some releases which update_parsing_mod.php can not fix.
+
+Open the files in a text editor and read the options to see how to use them.
+
+These scripts go in newznab/misc/testing
+
+You must be running php 5.4+ to use update_parsing_mod.php
 
 ---------------------------------------------------------------------------------------------------------------------
 
