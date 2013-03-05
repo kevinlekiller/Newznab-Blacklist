@@ -101,14 +101,29 @@ else //Full DB
 	$res = $db->query(sprintf($sql,''));
 }
 
-function determineCategory($rel,$foundName,$methodused)
+function determineCategory($rel,$foundName)
+{
+	$categoryID = null;
+	$category = new Category();
+	$categoryID = $category->determineCategory($rel['groupname'], $foundName);
+	if(($categoryID == $rel['categoryID'] || $categoryID == '7900') || ($foundName == $rel['name'] || $foundName == $rel['searchname']))
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+function updateCategory($rel,$foundName,$methodused)
 {
 	global $updated,$echo;
 	$categoryID = null;
 	$category = new Category();
 	$categoryID = $category->determineCategory($rel['groupname'], $foundName);
 	if(($methodused == 'a.b.hdtv.x264') && ($rel['groupname'] == 'alt.binaries.hdtv.x264')) { $categoryID = Category::CAT_MOVIE_HD; }
-    if(($categoryID == $rel['categoryID'] || $categoryID == 8010 || $categoryID == 5050 || $categoryID == 2020 || $categoryID == 6070 || $categoryID == '7900') || ($foundName == $rel['name'] || $foundName == $rel['searchname']))
+	if(($categoryID == $rel['categoryID'] || $categoryID == '7900')|| ($foundName == $rel['name'] || $foundName == $rel['searchname']))
 	{
 		$foundName = null;
 	}
@@ -173,7 +188,14 @@ if ($res)
 				}
 				$foundName = $title;
 				$methodused = "Release names 1: Knoc.One";
-				determineCategory($rel,$foundName,$methodused);
+				if (determineCategory($rel,$foundName) === true)
+				{
+					updateCategory($rel,$foundName,$methodused);
+				}
+				else
+				{
+					$foundName = null;
+				}
 			}
 						
 			//QoQ releases
@@ -181,7 +203,14 @@ if ($res)
 			{
 				$foundName = strrev( $rel['name'] );
 				$methodused = "Release names 2: QoQ";
-				determineCategory($rel,$foundName,$methodused);
+				if (determineCategory($rel,$foundName) === true)
+				{
+					updateCategory($rel,$foundName,$methodused);
+				}
+				else
+				{
+					$foundName = null;
+				}
 			}
 
 			//Use the Nfo to try to get the proper release name using scene regex.	
@@ -192,95 +221,242 @@ if ($res)
 				$Nfocount ++;
 				
 				//Title.SxxEx.EpTitle.source.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 1 Scene titles 1";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.SxxExx.EPtitle.resolution.source.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 2 Scene titles 2";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}	
 				}
 				//Title.SxxExx.source.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?-?e[0-9]([0-9])?)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])?-?e[0-9]([0-9])?)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 3 Scene titles 3";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.SxxExx.acodec.source.resolution.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?-?e[0-9]([0-9])?)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(480|720|1080)(i|p)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])?-?e[0-9]([0-9])?)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(480|720|1080)(i|p)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 4 Scene titles 4";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.Sxx-Exx.eptitle.year.group
 				if(preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?-?e[0-9]([0-9])?)[a-z0-9._\-\',;]+((19|20)\d\d)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 5 Scene titles 5";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.Sxx-Exx.res.src.vcod.group
-				if(preg_match('/\b[a-z0-9\.]+(s[0-9]([0-9])?e[0-9]([0-9])?).(480|720|1080)(i|p).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(DivX|(H|X)(.)?2?64|MPEG2|XviD|WMV)[a-z0-9\.]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9(\.|_|\-)]+(s?[0-9]([0-9])?e[0-9]([0-9])?).(480|720|1080)(i|p).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(DivX|(H|X)(.)?2?64|MPEG2|XviD|WMV)[a-z0-9(\.|_|\-)]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 6 Scene titles 6";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.year.eptitle.res.vcod
-				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)[a-z0-9._\-\',;]+(480|720|1080)(i|p)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9.]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)[a-z0-9._\-\',;]+(480|720|1080)(i|p)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9.]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 7 Scene titles 7";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.year.###(season/episode).source.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.[0-9]{2,4}\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)[0-9]{2,4}(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 8 Scene titles 8";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.year.language.acodec.source.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+(Brazilian|Chinese|Croatian|Danish|Deutsch|Dutch|Estonian|English|Finnish|Flemish|Francais|French|German|Greek|Hebrew|Icelandic|Italian|Japenese|Japan|Japanese|Korean|Latin|Nordic|Norwegian|Polish|Portuguese|Russian|Serbian|Slovenian|Swedish|Spanisch|Spanish|Thai|Turkish)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+(Brazilian|Chinese|Croatian|Danish|Deutsch|Dutch|Estonian|English|Finnish|Flemish|Francais|French|German|Greek|Hebrew|Icelandic|Italian|Japenese|Japan|Japanese|Korean|Latin|Nordic|Norwegian|Polish|Portuguese|Russian|Serbian|Slovenian|Swedish|Spanisch|Spanish|Thai|Turkish)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 9 Scene titles 9";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.year.resolution.source.acodec.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 10 Scene titles 10";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.year.resolution.source.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 11 Scene titles 11";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.year.source.resolution.acodec.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(480|720|1080)(i|p)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(480|720|1080)(i|p)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 12 Scene titles 12";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 				//Title.resolution.source.acodec.vcodec.group
-				if(preg_match('/\b[a-z0-9._\-\',;]+(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				if(preg_match('/[a-z0-9._\-\',;]+(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = str_replace("_",".",$matches['0']);
 					$methodused = "Nfo 13 Scene titles 13";	
-					determineCategory($rel,$foundName,$methodused);	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
+				}
+				// Videogames 1
+				if(preg_match('/[a-z0-9._\-\',;]+(ASIA|DLC|EUR|GOTY|JPN|KOR|MULTI\d{1}|NTSCU?|PAL|RF|Region(\.|_|-|( ))?Free|USA|XBLA)(\.|_|\-)(DLC\.Complete|FRENCH|GERMAN|MULTI\d{1}|PROPER|PSN|READ(\.|_|-|( ))?NFO|UMD)?(\.|_|\-)?(GC|NDS|NGC|PS3|PSP|WII|XBOX(360)?)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				{
+					$foundName = str_replace("_"," ",$matches['0']);
+					$methodused = "Nfo 14 Videogames 1";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
+				}
+				// Videogames 2
+				if(preg_match('/\b[a-z0-9._\-\',;]+(GC|NDS|NGC|PS3|WII|XBOX(360)?)(\.|_|\-)(DUPLEX|iNSOMNi|OneUp|STRANGE|SWAG|SKY)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				{
+					$foundName = str_replace("_"," ",$matches['0']);
+					$methodused = "Nfo 15 Videogames 2";	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
+				}
+				// Apps 1
+				if(preg_match('/\b[a-z0-9._\-\',;]+(\.|_|\-)(\d{1,10}|Linux|UNIX)(\.|_|\-)(RPM)?(\.|_|\-)?(X64)?(\.|_|\-)?(Incl)(\.|_|\-)(Keygen)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				{
+					$foundName = str_replace("_"," ",$matches['0']);
+					$methodused = "Nfo 44 Apps 1";	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
+				}
+				// Apps 2
+				if(preg_match('/\b[a-z0-9._\-\',;]+(\.|_|\-)(\d){1,8}(\.|_|\-)(winall-freeware)[a-z0-9._\-\',;]+/i',$nfo,$matches) && $foundName == "")
+				{
+					$foundName = str_replace("_"," ",$matches['0']);
+					$methodused = "Nfo 45 Apps 2";	
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}
 			}
 
@@ -301,140 +477,350 @@ if ($res)
 					{
 						$foundName = str_replace("MPEG2","MPEG2.HDTV",$matches3['0']);
 						$methodused = "Filename 1 R&C";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					// NhaNc3
-					if (preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?e[0-9]([0-9])?)\.(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.nSD\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)\.NhaNC3[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '')
+					if (preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])?e[0-9]([0-9])?)(\.|_|\-)(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)nSD(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)(\.|_|\-)NhaNC3[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '')
 					{
 						$foundName = $matches3['0'];
 						$methodused = "Filename 2 NhaNc3";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					// tvp 720p
-					if (preg_match('/\b(tvp-)[a-z0-9._\-\',;]+(s[0-9]([0-9])?e[0-9]([0-9])?)\.720p(?=\.mkv)/i', $file, $matches3) && $foundName == '')
+					if (preg_match('/\b(tvp-)[a-z0-9._\-\',;]+(s?[0-9]([0-9])?e[0-9]([0-9])?)(\.|_|\-)720p(?=\.mkv)/i', $file, $matches3) && $foundName == '')
 					{
 						$foundName = str_replace("720p","720p.HDTV.X264",$matches3['0']);
 						$methodused = "Filename 3 tvp 720p";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					// tvp 1080p
-					if (preg_match('/\b(tvp-)[a-z0-9._\-\',;]+(s[0-9]([0-9])?e[0-9]([0-9])?)\.1080p(?=\.mkv)/i', $file, $matches3) && $foundName == '')
+					if (preg_match('/\b(tvp-)[a-z0-9._\-\',;]+(s?[0-9]([0-9])?e[0-9]([0-9])?)(\.|_|\-)1080p(?=\.mkv)/i', $file, $matches3) && $foundName == '')
 					{
 						$foundName = str_replace("1080p","1080p.Bluray.X264",$matches3['0']);
 						$methodused = "Filename 4 tvp 1080p";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					// tvp xvid
-					if (preg_match('/\b(tvp-)[a-z0-9._\-\',;]+(s[0-9]([0-9])?e[0-9]([0-9])?)\.xvid(?=\.avi)/i', $file, $matches3) && $foundName == '')
+					if (preg_match('/\b(tvp-)[a-z0-9._\-\',;]+(s?[0-9]([0-9])?e[0-9]([0-9])?)(\.|_|\-)xvid(?=\.avi)/i', $file, $matches3) && $foundName == '')
 					{
 						$foundName = str_replace("xvid","XVID.DVDrip",$matches3['0']);
 						$methodused = "Filename 5 tvp xvid";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					// itouch
-					if (preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?e[0-9]([0-9])?)\.itouch-mw(?=\.mp4)/i', $file, $matches3) && $foundName == '')
+					if (preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])?e[0-9]([0-9])?)(\.|_|\-)itouch-mw(?=\.mp4)/i', $file, $matches3) && $foundName == '')
 					{
 						$foundName = str_replace("itouch-mw","272p.x264.hdtv.itouch-mw",$matches3['0']);
 						$methodused = "Filename 6 itouch (ipod releases)";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					//Title.SxxEx.EpTitle.source.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					if (preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 7 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					//Title.SxxExx.EPtitle.resolution.source.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					if (preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])-?e?[0-9]([0-9])?)[a-z0-9._\-\',; \[\]]+(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)[a-z0-9._\-\',;]+(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 8 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					//Title.SxxExx.source.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?-?e[0-9]([0-9])?)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					if (preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])?-?e[0-9]([0-9])?)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 9 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					//Title.SxxExx.acodec.source.resolution.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?-?e[0-9]([0-9])?)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(480|720|1080)(i|p)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					if (preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])?-?e[0-9]([0-9])?)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(480|720|1080)(i|p)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 10 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					//Title.Sxx-Exx.eptitle.year.group.extension
 					if (preg_match('/\b[a-z0-9._\-\',;]+(s[0-9]([0-9])?-?e[0-9]([0-9])?)[a-z0-9._\-\',;]+((19|20)\d\d)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 11 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					//Title.Sxx-Exx.res.src.vcod.group.extension
-					if (preg_match('/\b[a-z0-9\.]+(s[0-9]([0-9])?e[0-9]([0-9])?).(480|720|1080)(i|p).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(DivX|(H|X)(.)?2?64|MPEG2|XviD|WMV)[a-z0-9\.]+/i', $file, $matches3) && $foundName == '') 
+					if (preg_match('/\b[a-z0-9(\.|_|\-)]+(s?[0-9]([0-9])?e[0-9]([0-9])?).(480|720|1080)(i|p).(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(DivX|(H|X)(.)?2?64|MPEG2|XviD|WMV)[a-z0-9(\.|_|\-)]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 12 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
-					//Title.year.eptitle.res.vcod.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)[a-z0-9._\-\',;]+(480|720|1080)(i|p)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9.]+/i', $file, $matches3) && $foundName == '') 
+					//Title.Sxx-Exx.eptitle.src.vcod.group.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+(s?[0-9]([0-9])?(-|x)?e?[0-9]([0-9])?)[a-z0-9._\-\',;]+(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)(\.|_|\-)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 13 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
-					//Title.year.###(season/episode).source.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.[0-9]{2,4}\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					//Title.year.eptitle.res.vcod.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)[a-z0-9._\-\',;]+(480|720|1080)(i|p)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9.]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 14 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
-					//Title.year.language.acodec.source.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+(Brazilian|Chinese|Croatian|Danish|Deutsch|Dutch|Estonian|English|Finnish|Flemish|Francais|French|German|Greek|Hebrew|Icelandic|Italian|Japenese|Japan|Japanese|Korean|Latin|Nordic|Norwegian|Polish|Portuguese|Russian|Serbian|Slovenian|Swedish|Spanisch|Spanish|Thai|Turkish)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					//Title.year.###(season/episode).source.group.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)[0-9]{2,4}(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 15 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
-					//Title.year.resolution.source.acodec.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					//Title.year.language.acodec.source.vcodec.group.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+(Brazilian|Chinese|Croatian|Danish|Deutsch|Dutch|Estonian|English|Finnish|Flemish|Francais|French|German|Greek|Hebrew|Icelandic|Italian|Japenese|Japan|Japanese|Korean|Latin|Nordic|Norwegian|Polish|Portuguese|Russian|Serbian|Slovenian|Swedish|Spanisch|Spanish|Thai|Turkish)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 16 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
-					//Title.year.resolution.source.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					//Title.year.resolution.source.acodec.vcodec.group.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 17 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
-					//Title.year.source.resolution.acodec.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(480|720|1080)(i|p)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-|\.)?(AC3|HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					//Title.year.resolution.source.vcodec.group.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)(480|720|1080)(i|p)?(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 18 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
-					//Title.resolution.source.acodec.vcodec.group.extension
-					if (preg_match('/\b[a-z0-9._\-\',;]+(480|720|1080)(i|p)\.(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)\.(AAC( LC)?|AC-?3|DD5(\.1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)\.(DivX|(H|X)\.?2?64|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					//Title.year.source.resolution.acodec.vcodec.group.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+((19|20)\d\d)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL).(480|720|1080)(i|p)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-|(\.|_|\-))?(AC3|HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
 						$methodused = "Filename 19 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
+					}
+					//Title.resolution.source.acodec.vcodec.group.extension
+					if (preg_match('/\b[a-z0-9._\-\',;]+(480|720|1080)(i|p)(\.|_|\-)(BD(-?(25|50|RIP))?|Blu(-)?Ray( )?(3D)?|BRRIP|CAM(RIP)?|DBrip|DTV|DVD\-?(5|9|(R(IP)?|scr(eener)?))?|(H|P|S)D?(RIP|TV(RIP)?)?|NTSC|PAL|R5|Ripped |(S)?VCD|scr(eener)?|SAT(RIP)?|TS|VHS(RIP)?|VOD|WEB-DL)(\.|_|\-)(AAC( LC)?|AC-?3|DD5((\.|_|\-)1)?|(A_)?DTS(-)?(HD)?|(Dolby)?(( )?TrueHD)?|MP3)(\.|_|\-)(DivX|(H|X)(\.|_|\-)?264|MPEG2|XviD|WMV)[a-z0-9._\-\',;]+/i', $file, $matches3) && $foundName == '') 
+					{
+						$foundName = str_replace("_",".",$matches3['0']);
+						$methodused = "Filename 20 Scene Releases";
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
+					}
+					// Videogames 1
+					if(preg_match('/[a-z0-9._\-\',;]+(ASIA|DLC|EUR|GOTY|JPN|KOR|MULTI\d{1}|NTSCU?|PAL|RF|Region(\.|_|-|( ))?Free|USA|XBLA)(\.|_|\-)(DLC\.Complete|FRENCH|GERMAN|MULTI\d{1}|PROPER|PSN|READ(\.|_|-|( ))?NFO|UMD)?(\.|_|\-)?(GC|NDS|NGC|PS3|PSP|WII|XBOX(360)?)[a-z0-9._\-\',;]+/i',$file,$matches) && $foundName == "")
+					{
+						$foundName = str_replace("_"," ",$matches['0']);
+						$methodused = "Filename 21 Videogames 1";	
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
+					}
+					// Videogames 2
+					if(preg_match('/[a-z0-9._\-\',;]+(GC|NDS|NGC|PS3|WII|XBOX(360)?)(\.|_|\-)(DUPLEX|iNSOMNi|STRANGE|SWAG|SKY)[a-z0-9._\-\',;]+/i',$file,$matches) && $foundName == "")
+					{
+						$foundName = str_replace("_"," ",$matches['0']);
+						$methodused = "Filename 22 Videogames 2";	
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
+					}
+					// Apps 1
+					if(preg_match('/\b[a-z0-9._\-\',;]+(\.|_|\-)(\d{1,10}|Linux|UNIX)(\.|_|\-)(RPM)?(\.|_|\-)?(X64)?(\.|_|\-)?(Incl)(\.|_|\-)(Keygen)[a-z0-9._\-\',;]+/i',$file,$matches) && $foundName == "")
+					{
+						$foundName = str_replace("_"," ",$matches['0']);
+						$methodused = "Nfo 35 Apps 1";	
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
+					}
+					// Apps 2
+					if(preg_match('/\b[a-z0-9._\-\',;]+(\.|_|\-)(\d){1,8}(\.|_|\-)(winall-freeware)[a-z0-9._\-\',;]+/i',$file,$matches) && $foundName == "")
+					{
+						$foundName = str_replace("_"," ",$matches['0']);
+						$methodused = "Nfo 36 Apps 2";	
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 					// ReleaseGroup.Title.Format.mkv
 					if (preg_match('/(?<=swg_|swghd\-|lost\-|veto\-|kaka\-|abd\-|airline\-|daa\-|data\-|japhson\-|ika\-|lng\-|nrdhd\-|saimorny\-|sparks\-|ulshd\-|nscrns\-|ifpd\-|invan\-|an0\-|besthd\-|muxhd\-|s7\-).*?(1080|720|480)(i|p)(?=\.MKV)/i', $file, $matches3) && $foundName == '') 
 					{
 						$foundName = str_replace("_",".",$matches3['0']);
-						$methodused = "Filename 20 Scene Releases";
-						determineCategory($rel,$foundName,$methodused);
+						$methodused = "Filename 23 Scene Releases";
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 				}	
 			}
@@ -447,9 +833,15 @@ if ($res)
 				if(preg_match('/([a-z0-9.]+\.MBLURAY)/i', $nfo, $matches))
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 14 LOUNGE";
-					determineCategory($rel,$foundName,$methodused);
-
+					$methodused = "Nfo 16 LOUNGE";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}	
 
 				//AsianDVDClub releases
@@ -458,8 +850,15 @@ if ($res)
 					if(preg_match('/.*\(\d{4}\).*/i', $nfo, $matches))
 					{
 						$foundName = $matches[0];
-						$methodused = "Nfo 15 AsianDVDClub";
-						determineCategory($rel,$foundName,$methodused);
+						$methodused = "Nfo 17 AsianDVDClub";
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}
 					}
 				}
 
@@ -468,8 +867,15 @@ if ($res)
 				if(preg_match('/ACOUSTiC presents \.\.\..*?([a-z0-9].*?\(.*?\))/is', $nfo, $matches))
 				{
 					$foundName = $matches[1].".MBLURAY";
-					$methodused = "Nfo 16 ACOUSTiC ";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 18 ACOUSTiC ";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}			
 
 				//Japhson  releases
@@ -525,8 +931,15 @@ if ($res)
 							$foundName = $foundName.".".$matches[1];
 						}
 						$foundName = $foundName."-Japhson";
-						$methodused = "Nfo 17 Japhson";
-						determineCategory($rel,$foundName,$methodused);							
+						$methodused = "Nfo 19 Japhson";
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}						
 					}			
 				}				
 				
@@ -576,8 +989,15 @@ if ($res)
 							$foundName = $foundName.".".$matches[1];
 						}
 						$foundName = $foundName."-AIHD";
-						$methodused = "Nfo 18 AIHD";
-						determineCategory($rel,$foundName,$methodused);						
+						$methodused = "Nfo 20 AIHD";
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}					
 					}			
 				}		
 				
@@ -585,16 +1005,30 @@ if ($res)
 				if(preg_match('/\*\s+([a-z0-9]+(?:\.|_| )[a-z0-9\.\_\- ]+ \- imagine)\s+\*/i', $nfo, $matches))
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 19 imagine";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 21 imagine";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}
 				
 				//LEGION releases
 				if(preg_match('/([a-z0-9 \.\-]+LEGi0N)/is', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 20 Legion";
-					determineCategory($rel,$foundName,$methodused);
+					$methodused = "Nfo 22 Legion";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}
 				}				
 				
 				//SWAGGER releases
@@ -624,74 +1058,144 @@ if ($res)
 							$foundName = $foundName.".".$matches[1];
 						}
 					$foundName = $foundName."-SWAGGER";
-					$methodused = "Nfo 21 SWAGGER";
-					determineCategory($rel,$foundName,$methodused);						
+					$methodused = "Nfo 23 SWAGGER";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 				}
 
 				//cm8 releases
 				if(preg_match('/([a-z0-9]+(?:\.|_| )[a-z0-9\.\_\- \'\)\(]+\-(futv|crimson|qcf|runner|clue|episode|momentum|PFA|topaz|vision|tdp|haggis|nogrp|shirk|imagine|santi|sys|deimos|ltu|ficodvdr|cm8|dvdr|Nodlabs|aaf|sprinter|exvid|flawl3ss|rx|magicbox|done|unveil))\b/i', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 22 cm8";
-					determineCategory($rel,$foundName,$methodused);						
+					$methodused = "Nfo 24 cm8";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 				}
 				
 				//river
 				if(preg_match('/([a-z0-9\.\_\-]+\-(webios|river|w4f|sometv|ngchd|C4|gf|bov|26k|ftw))\b/i', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 23 river-1";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 25 river-1";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}
 				if(preg_match('/([a-z0-9]+(?:\.|_| )[a-z0-9\.\_\- \'\)\(]+\-(CiA|Anarchy|RemixHD|FTW|Revott|WAF|CtrlHD|Telly|Nif|Line|NPW|Rude|CRisC|SHK|AssAss1ns|Leverage|BBW|NPW))\b/i', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 24 river-2";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 26 river-2";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}			
 				}
 				if(preg_match('/([a-z0-9]+(?:\.|_| )[a-z0-9\.\_\- \'\)\(]+\-(XPD|RHyTM))\b/i', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 25 river-3";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 27 river-3";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}
 				if(preg_match('/(-PROD$|-BOV$|-NMR$|$-HAGGiS|-JUST$|CRNTV$|-MCA$|int$|-DEiTY$|-VoMiT$|-iNCiTE$|-BRUTUS$|-DCN$|-saints$|-sfm$|-lol$|-fov$|-logies$|-c4tv$|-fqm$|-jetset$|-ils$|-miragetv$|-gfvid$|-btl$|-terra$)/i', $rel['searchname']) && $foundName == "")
 				{
 					$foundName = $rel['searchname'];
-					$methodused = "Nfo 26 river-4";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 28 river-4";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}
 				
 				//SANTi releases
 				if(preg_match('/\b([a-z0-9]+(?:\.|_| )[a-z0-9\.\_\- \']+\-santi)\b/i', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 27 SANTi";
-					determineCategory($rel,$foundName,$methodused);						
+					$methodused = "Nfo 29 SANTi";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}
 				/*
 				//NPW releases
 				if(preg_match('/(.*?NPW).*?/i', $rel['searchname'], $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 28 NPW";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 30 NPW";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}			
 				}*/
 
 				//INSPiRAL releases
 				if(preg_match('/^([a-z0-9]+(?:\.|_| )[a-z0-9\.\_\- ]+ \- INSPiRAL)\s+/im', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 29 INSPiRAL";
-					determineCategory($rel,$foundName,$methodused);						
+					$methodused = "Nfo 31 INSPiRAL";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 				}
 
 				//CIA releases
 				if(preg_match('/Release NAME.*?\:.*?([a-z0-9][a-z0-9\.\ ]+)\b.*?([a-z0-9][a-z0-9\.\ ]+\-CIA)\b/is', $nfo, $matches) && $foundName == "")
 				{
 					$foundName = $matches[1].$matches[2];
-					$methodused = "Nfo 30 CIA";
-					determineCategory($rel,$foundName,$methodused);						
+					$methodused = "Nfo 32 CIA";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 				}
 
 				//HDChina releases
@@ -700,8 +1204,15 @@ if ($res)
 					if(preg_match('/Disc Title\:.*?\b([a-z0-9\ \.\-\_()]+\-HDChina)/i', $nfo, $matches))
 					{
 						$foundName = $matches[1];
-						$methodused = "Nfo 31 DChina";
-						determineCategory($rel,$foundName,$methodused);						
+						$methodused = "Nfo 33 DChina";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 					}
 				}
 				
@@ -728,8 +1239,15 @@ if ($res)
 						$foundName = $foundName.".".$matches[1];
 					}
 					$foundName = $foundName."-PRiNGLES";
-					$methodused = "Nfo 32 Pringles";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 34 Pringles";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}
 
 				//Fairlight releases
@@ -744,8 +1262,15 @@ if ($res)
 						$foundName = $title;
 					}
 					$foundName = $foundName."-FLT";
-					$methodused = "Nfo 33 FairLight";
-					determineCategory($rel,$foundName,$methodused);						
+					$methodused = "Nfo 35 FairLight";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 				}
 
 				//CORE releases
@@ -770,16 +1295,30 @@ if ($res)
 						$foundName = $foundName." ".$os;
 					}
 					$foundName = $foundName."-CORE";
-					$methodused = "Nfo 34 CORE";
-					determineCategory($rel,$foundName,$methodused);						
+					$methodused = "Nfo 36 CORE";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 				}
 				
 				//CompleteRelease
 				if(preg_match('/Complete name.*?([a-z0-9].*?\-[a-z0-9]+)\b/i',$nfo,$matches) && $foundName == "")
 				{
 					$foundName = $matches[1];
-					$methodused = "Nfo 35 CompleteRelease";
-					determineCategory($rel,$foundName,$methodused);					
+					$methodused = "Nfo 37 CompleteRelease";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}				
 				}
 				
 				//Livesets
@@ -824,8 +1363,15 @@ if ($res)
 						}							
 						$tempname = preg_replace("/[^a-zA-Z,0-9,\-,\s]/", "", $tempname);
 						$foundName = $tempname;
-						$methodused = "Nfo 36 Live Sets";
-						determineCategory($rel,$foundName,$methodused);						
+						$methodused = "Nfo 38 Live Sets";
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
+						}					
 					}
 				}
 
@@ -837,8 +1383,15 @@ if ($res)
 						if(!preg_match('/usenet\-space/i',$matches['name']))
 						{
 							$foundName = $matches['name'];
-							$methodused = "Nfo 37 scene";
-							determineCategory($rel,$foundName,$methodused);								
+							$methodused = "Nfo 39 scene";
+							if (determineCategory($rel,$foundName) === true)
+							{
+								updateCategory($rel,$foundName,$methodused);
+							}
+							else
+							{
+								$foundName = null;
+							}							
 						}
 					}
 				}
@@ -859,7 +1412,6 @@ if ($res)
 				$source = null;
 				//var_dump($lut);
 
-
 				foreach ( $lut as $k=>$v )
 				{
 					$v = rtrim($v);
@@ -881,94 +1433,6 @@ if ($res)
 						$episode = $matches[2];
 					}
 				}
-				
-				if ( isset ( $lut['title'] ) )
-				{
-					$del = " ";
-					if ( isset ($lut['series']))
-					{
-						$tempname = $lut['series'];
-					}
-					$tempname = $tempname.$del.$lut['title'];
-					if ( $season && $episode )
-					{
-						$tempname = $tempname.$del."S".str_pad($season,2,'0',STR_PAD_LEFT).'E'.str_pad($episode,2,'0',STR_PAD_LEFT);
-					}
-					else							
-					{
-						if ($season)
-						{
-							$tempname = $tempname.$del."S".$season;
-						}
-						if ($episode)
-						{
-							$tempname = $tempname.$del."Ep".$episode;
-						}
-					}
-					if (isset ($lut['source']) && !preg_match('/SAT/i',$lut['title']))
-					{
-						$tempname = $tempname.$del.$lut['source'];
-					}
-					if (!preg_match('/(19|20)\d{2}/', $tempname) && $year)
-					{
-						$tempname = $tempname.$del.$year;
-					}
-					if ( isset($lut['language']))
-					{
-						$tempname = $tempname.$del.$lut['language'];
-					}
-					if ($vidsource)
-					{
-						$tempname = $tempname.$del.$vidsource;
-					}
-					$tempname = preg_replace("/ /", " ", $tempname);
-					$tempname = preg_replace("/[^a-zA-Z,0-9,\-,\&,\s]/", " ", $tempname);
-					$tempname = preg_replace("/[ ]+/"," ",$tempname);
-					$methodused = "The Big One Other";
-					$foundName = $tempname;
-					determineCategory($rel,$foundName,$methodused);								
-				}
-			}
-	
-			//The Big One v2
-			if(preg_match_all('/([a-z0-9\ ]+).{2,}(\:|\[)(?P<name>.*)(\s{1}|\s{0})/i',$nfo, $matches) && $foundName == "")
-			{
-				$lut = array();
-				foreach ( $matches[1] as $key=>$k ) { $lut[str_replace(' ','',strtolower(trim($k)))] = trim($matches[3][$key]); }
-				$year = null;
-				$vidsource = null;
-				$series = null;
-				$season = null;
-				$episode = null;
-				$language = null;
-				$artist = null;
-				$source = null;
-				$encoder = null;
-				//var_dump($lut);
-
-
-				foreach ( $lut as $k=>$v )
-				{
-					$v = rtrim($v);
-					if ( ! $year && preg_match('/((19|20)\d{2})/',$v,$matches) )
-					{
-						$year = $matches[1];
-					}
-					if ( ! $vidsource && preg_match('/(xvid|x264|h264|wmv|divx)/i',$v,$matches) )
-					{
-						$vidsource = $matches[1];
-					}
-
-					if ( ! $season && preg_match('/(season|seizon).*?(\d{1,3})/i',$v,$matches) )
-					{
-						$season = $matches[2];
-					}
-					if ( ! $episode && preg_match('/(Episode|ep).*?(\d{1,3})/i',$v,$matches) )
-					{
-						$episode = $matches[2];
-					}
-				}
-
 				if ( isset ( $lut['artist'] ) )
 				{
 					$del = "-";
@@ -1022,9 +1486,16 @@ if ($res)
 					}	
 					$tempname = preg_replace("/[^a-zA-Z,0-9,\-,\&,\s]/", "", $tempname);
 					$tempname = preg_replace("/[ ]{2,}/","",$tempname);		
-					$methodused = "The Big One Music v2";
+					$methodused = "The Big One Music";
 					$foundName = $tempname;
-					determineCategory($rel,$foundName,$methodused);								
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}							
 				}
 				else if ( isset ( $lut['title'] ) )
 				{
@@ -1068,15 +1539,20 @@ if ($res)
 					$tempname = preg_replace("/ /", " ", $tempname);
 					$tempname = preg_replace("/[^a-zA-Z,0-9,\-,\&,\s]/", " ", $tempname);
 					$tempname = preg_replace("/[ ]+/"," ",$tempname);
-					$methodused = "The Big One Other v2";
+					$methodused = "The Big One Other";
 					$foundName = $tempname;
-					determineCategory($rel,$foundName,$methodused);								
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}								
 				}
 			}
-	
-			///
-			///unable to extract releasename from nfo, try the rar file
-			///
+
+			// unable to extract releasename from nfo, try the rar file
 			if($rel['filenames'] && $foundName == '')
 			{
 				$Filecount++;
@@ -1097,48 +1573,59 @@ if ($res)
 						if(preg_match('/(\\\\)(?P<name>.*?ReleaseS Toppers)/',$file,$matches1)  && $foundName == '')
 						{
 							$foundName = $matches1['name'];
-							$methodused = "Filename 20 Simply ReleaseS Toppers";
-							determineCategory($rel,$foundName,$methodused);		
-							
-						}
-						//Scene format no folder.
-						if(preg_match('/^([a-z0-9\.\_\- ]+\-[a-z0-9\_]+)(\\\\|)$/i',$matches[1])  && $foundName == '' )
-						{
-							if (strlen($matches['1']) >= 15)
+							$methodused = "Filename 24 Simply ReleaseS Toppers";
+							if (determineCategory($rel,$foundName) === true)
 							{
-								$foundName = $matches['1'];
-								$methodused = "Filename 21 No Folder";
-								determineCategory($rel,$foundName,$methodused);	
+								updateCategory($rel,$foundName,$methodused);
 							}
+							else
+							{
+								$foundName = null;
+							}		
 						}
-						
+
 						//Check to see if file is inside of a folder. Use folder name if it is
 						if(preg_match('/^(.*?\\\\)(.*?\\\\|)(.*?)$/i', $file, $matches1)  && $foundName == '' )
 						{
 							If(preg_match('/^([a-z0-9\.\_\- ]+\-[a-z0-9\_]+)(\\\\|)$/i',$matches1['1'],$res))
 							{
 								$foundName = $res['1'];
-								$methodused = "Filename 22";
-								determineCategory($rel,$foundName,$methodused);								
+								$methodused = "Filename 25";
+								if (determineCategory($rel,$foundName) === true)
+								{
+									updateCategory($rel,$foundName,$methodused);
+								}
+								else
+								{
+									$foundName = null;
+								}				
 							}
 							If(preg_match('/(?!UTC)([a-z0-9]+[a-z0-9\.\_\- \'\)\(]+(\d{4}|HDTV).*?\-[a-z0-9]+)/i',$matches1['1'],$res) && $foundName == '')
 							{
 								$foundName = $res['1'];
-								$methodused = "Filename 23";
-								determineCategory($rel,$foundName,$methodused);								
+								$methodused = "Filename 26";
+								if (determineCategory($rel,$foundName) === true)
+								{
+									updateCategory($rel,$foundName,$methodused);
+								}
+								else
+								{
+									$foundName = null;
+								}							
 							}
 							If(preg_match('/^([a-z0-9\.\_\- ]+\-[a-z0-9\_]+)(\\\\|)$/i',$matches1['2'],$res) && $foundName == '')
 							{
 								$foundName = $res['1'];
-								$methodused = "Filename 24";
-								determineCategory($rel,$foundName,$methodused);									
+								$methodused = "Filename 27";
+								if (determineCategory($rel,$foundName) === true)
+								{
+									updateCategory($rel,$foundName,$methodused);
+								}
+								else
+								{
+									$foundName = null;
+								}					
 							}
-						}
-						If(preg_match('/(?!UTC)([a-z0-9]+[a-z0-9\.\_\- \'\)\(]+(\d{4}|HDTV).*?\-[a-z0-9]+)/i',$file,$matches2)  && $foundName == '')
-						{
-							$foundName = $matches2['1'];
-							$methodused = "Filename 25";
-							determineCategory($rel,$foundName,$methodused);								
 						}
 					}
 					
@@ -1150,8 +1637,15 @@ if ($res)
 						if(preg_match('/(\\\\)(?P<name>.*?ReleaseS Toppers)/',$file,$matches1)  && $foundName == '')
 						{
 							$foundName = $matches1['name'];
-							$methodused = "Filename 26";
-							determineCategory($rel,$foundName,$methodused);
+							$methodused = "Filename 29";
+							if (determineCategory($rel,$foundName) === true)
+							{
+								updateCategory($rel,$foundName,$methodused);
+							}
+							else
+							{
+								$foundName = null;
+							}
 						}
 						//Scene format no folder.
 						if(preg_match('/^([a-z0-9\.\_\!\'(\\)\- ]+\-[a-z0-9\_]+)(\\\\|)$/i',$matches[1])  && $foundName == '' )
@@ -1159,8 +1653,15 @@ if ($res)
 							if (strlen($matches['1']) >= 15)
 							{
 								$foundName = $matches['1'];
-								$methodused = "Filename 27 No Folder v2";
-								determineCategory($rel,$foundName,$methodused);	
+								$methodused = "Filename 30 No Folder";
+								if (determineCategory($rel,$foundName) === true)
+								{
+									updateCategory($rel,$foundName,$methodused);
+								}
+								else
+								{
+									$foundName = null;
+								}
 							}
 						}
 
@@ -1170,27 +1671,55 @@ if ($res)
 							if(preg_match('/^([a-z0-9\.\_\- ]+\.[a-z0-9\_]+)(\\\\|)$/i',$matches1['1'],$res))
 							{
 								$foundName = $res['1'];
-								$methodused = "Filename 28";
-								determineCategory($rel,$foundName,$methodused);								
+								$methodused = "Filename 31";
+								if (determineCategory($rel,$foundName) === true)
+								{
+									updateCategory($rel,$foundName,$methodused);
+								}
+								else
+								{
+									$foundName = null;
+								}						
 							}
 							if(preg_match('/(?!UTC)([a-z0-9]+[a-z0-9\.\_\- \'\)\(]+(\d{4}|HDTV).*?\-[a-z0-9]+)/i',$matches1['1'],$res) && $foundName == '')
 							{
 								$foundName = $res['1'];
-								$methodused = "Filename 29";
-								determineCategory($rel,$foundName,$methodused);								
+								$methodused = "Filename 32";
+								if (determineCategory($rel,$foundName) === true)
+								{
+									updateCategory($rel,$foundName,$methodused);
+								}
+								else
+								{
+									$foundName = null;
+								}						
 							}
 							if(preg_match('/^([a-z0-9\.\_\!\'(\\)\- ]+\-[a-z0-9\_]+)(\\\\|)$/i',$matches1['2'],$res) && $foundName == '')
 							{
 								$foundName = $res['1'];
-								$methodused = "Filename 30";
-								determineCategory($rel,$foundName,$methodused);									
+								$methodused = "Filename 33";
+								if (determineCategory($rel,$foundName) === true)
+								{
+									updateCategory($rel,$foundName,$methodused);
+								}
+								else
+								{
+									$foundName = null;
+								}							
 							}
 						}
 						if(preg_match('/(?!UTC)([a-z0-9]+[a-z0-9\.\_\- \'\)\(]+(\d{4}|HDTV).*?\-[a-z0-9]+)/i',$file,$matches2)  && $foundName == '')
 						{
 							$foundName = $matches2['1'];
-							$methodused = "Filename 31";
-							determineCategory($rel,$foundName,$methodused);								
+							$methodused = "Filename 34";
+							if (determineCategory($rel,$foundName) === true)
+							{
+								updateCategory($rel,$foundName,$methodused);
+							}
+							else
+							{
+								$foundName = null;
+							}						
 						}
 					}
 				}
@@ -1414,9 +1943,16 @@ if ($res)
 						}
 						$foundName = $foundName.".".$matches[2];
 					}
-					$methodused = "Nfo 38 LastNfoAttempt 1 - Title (Year)";
+					$methodused = "Nfo 40 LastNfoAttempt 1 - Title (Year)";
 					$foundName = $foundName."NoGroup";
-					determineCategory($rel,$foundName,$methodused);						
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}					
 				}
 				//LastNfoAttempt (IMDB)
 				if(preg_match('/tt(\d{7})/i',$nfo,$matches) && $foundName == "")
@@ -1667,8 +2203,15 @@ if ($res)
 								$foundName = $foundName.".".$matches[1];
 							}
 							$foundName = $foundName."NoGroup";
-							$methodused = "Nfo 39 LastNfoAttempt 2 - IMDB.com";	
-							determineCategory($rel,$foundName,$methodused);					
+							$methodused = "Nfo 41 LastNfoAttempt 2 - IMDB.com";	
+							if (determineCategory($rel,$foundName) === true)
+							{
+								updateCategory($rel,$foundName,$methodused);
+							}
+							else
+							{
+								$foundName = null;
+							}				
 						}
 					}
 				}
@@ -1700,9 +2243,16 @@ if ($res)
 						}
 						$foundName = $foundName.".".$matches[0];
 					}
-					$methodused = "Nfo 40 LastNfoAttempt 3 (Specific type of NFO)";
+					$methodused = "Nfo 42 LastNfoAttempt 3 (Specific type of NFO)";
 					$foundName = $foundName.".NoGroup";
-					determineCategory($rel,$foundName,$methodused);						
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}						
 				}
 				//LastNfoAttempt 4 Iguana NFO's
 				if(preg_match('/\bSupplier.+IGUANA\b/i', $nfo) && $foundName == "")
@@ -1710,17 +2260,16 @@ if ($res)
 					if(preg_match('/\b([a-z0-9._\-\',;]+(( )| - )[a-z0-9._\-\',;]+)+( )\(?(19|20)\d\d\)?/i',$nfo,$matches))
 					{
 						$foundName = $matches[0];
-						echo "$foundName \n";
 					}
 					if(preg_match('/\s\[\*\] (English|Dutch|French|German|Spanish)\b/i',$nfo,$matches))
 					{
 						$foundName = $foundName.".".$matches[1];
 					}
-					if(preg_match('/\s\[\*\] (DTS 6\.1|DS 5\.1|DS 2\.0|DS 2\.0 MONO)\b/i',$nfo,$matches))
+					if(preg_match('/\s\[\*\] (DTS 6(\.|_|\-)1|DS 5(\.|_|\-)1|DS 2(\.|_|\-)0|DS 2(\.|_|\-)0 MONO)\b/i',$nfo,$matches))
 					{
 						$foundName = $foundName.".".$matches[1];
 					}
-					if(preg_match('/\bFormat.+(DVD(5|9|R)?|(h|x)\.?264)\b/i',$nfo,$matches))
+					if(preg_match('/\bFormat.+(DVD(5|9|R)?|(h|x)(\.|_|\-)?264)\b/i',$nfo,$matches))
 					{
 						$foundName = $foundName.".".$matches[1];
 					}
@@ -1740,9 +2289,111 @@ if ($res)
 						}
 						$foundName = $foundName.".".$matches[1];
 					}
+					$methodused = "Nfo 43 LastNfoAttempt 4 (IGUANA NFOs)";
+					$foundName = $foundName.".IGUANA";
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}	
 				}
 			}
 			
+			//The Big One v2
+			if(preg_match_all('/([a-z0-9\ ]+).{2,}(\:|\[)(?P<name>.*)(\s{1}|\s{0})/i',$nfo, $matches) && $foundName == "")
+			{
+				$lut = array();
+				foreach ( $matches[1] as $key=>$k ) { $lut[str_replace(' ','',strtolower(trim($k)))] = trim($matches[3][$key]); }
+				$year = null;
+				$vidsource = null;
+				$series = null;
+				$season = null;
+				$episode = null;
+				$language = null;
+				$artist = null;
+				$source = null;
+				$encoder = null;
+				//var_dump($lut);
+
+
+				foreach ( $lut as $k=>$v )
+				{
+					$v = rtrim($v);
+					if ( ! $year && preg_match('/((19|20)\d{2})/',$v,$matches) )
+					{
+						$year = $matches[1];
+					}
+					if ( ! $vidsource && preg_match('/(xvid|x264|h264|wmv|divx)/i',$v,$matches) )
+					{
+						$vidsource = $matches[1];
+					}
+
+					if ( ! $season && preg_match('/(season|seizon).*?(\d{1,3})/i',$v,$matches) )
+					{
+						$season = $matches[2];
+					}
+					if ( ! $episode && preg_match('/(Episode|ep).*?(\d{1,3})/i',$v,$matches) )
+					{
+						$episode = $matches[2];
+					}
+				}
+				if ( isset ( $lut['title'] ) )
+				{
+					$del = " ";
+					if ( isset ($lut['series']))
+					{
+						$tempname = $lut['series'];
+					}
+					$tempname = $tempname.$del.$lut['title'];
+					if ( $season && $episode )
+					{
+						$tempname = $tempname.$del."S".str_pad($season,2,'0',STR_PAD_LEFT).'E'.str_pad($episode,2,'0',STR_PAD_LEFT);
+					}
+					else							
+					{
+						if ($season)
+						{
+							$tempname = $tempname.$del."S".$season;
+						}
+						if ($episode)
+						{
+							$tempname = $tempname.$del."Ep".$episode;
+						}
+					}
+					if (isset ($lut['source']) && !preg_match('/SAT/i',$lut['title']))
+					{
+						$tempname = $tempname.$del.$lut['source'];
+					}
+					if (!preg_match('/(19|20)\d{2}/', $tempname) && $year)
+					{
+						$tempname = $tempname.$del.$year;
+					}
+					if ( isset($lut['language']))
+					{
+						$tempname = $tempname.$del.$lut['language'];
+					}
+					if ($vidsource)
+					{
+						$tempname = $tempname.$del.$vidsource;
+					}
+					$tempname = preg_replace("/ /", " ", $tempname);
+					$tempname = preg_replace("/[^a-zA-Z,0-9,\-,\&,\s]/", " ", $tempname);
+					$tempname = preg_replace("/[ ]+/"," ",$tempname);
+					$methodused = "The Big One Other v2";
+					$foundName = $tempname;
+					if (determineCategory($rel,$foundName) === true)
+					{
+						updateCategory($rel,$foundName,$methodused);
+					}
+					else
+					{
+						$foundName = null;
+					}							
+				}
+			}
 			if ($foundName == '' && $debug == true)
 			{
 				echo 'ReleaseID: 		'.$rel['RID']."\n";
