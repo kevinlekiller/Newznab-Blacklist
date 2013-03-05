@@ -27,7 +27,7 @@ $echo = false;
 $limited = true;
 /// Set to true for 24 hours, false for whole db. 
 
-/// WARNING!!!!!!!!The following value runs update_parsing either against "other categories", or all categories
+/// WARNING!!!!!!!!The following value runs update_parsing either against "other categories", or all categories, do not use this if $echo is false. This is for testing.
 /// WARNING!!!!!!!!Make sure memory_limit in php has no limit ( -1 ) if you are running against all categories
 $othercats = true;
 /// WARNING!!!!!!!!Set to true(recommended!) to do "other" categories
