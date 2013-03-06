@@ -1401,7 +1401,7 @@ class Category
 	*/	
 	public function isBookComic($releasename)
 	{
-		if (preg_match('/(\.|_|\-)?comic(\.|_|\-)?/i', $releasename))
+		if (preg_match('/comic/i', $releasename))
 		{
 			$this->tmpCat = Category::CAT_BOOK_COMICS;
 			return true;
@@ -1414,7 +1414,7 @@ class Category
 	*/	
 	public function isBookMag($releasename)
 	{
-		if (preg_match('/(\.|_|\-)?(Mag(s|azin|azine|azines))(\.|_|\-)?/i', $releasename))
+		if (preg_match('/Mag(s|azin|azine|azines)/i', $releasename))
 		{
 			$this->tmpCat = Category::CAT_BOOK_MAGS;
 			return true;
@@ -1427,7 +1427,7 @@ class Category
 	*/	
 	public function isBookEbook($releasename)
 	{
-		if (preg_match('/(\.|_|\-)?(Ebook|E?\-book|\) WW|\[Springer\]| epub|ISBN)(\.|_|\-)?/i', $releasename))
+		if (preg_match('/Ebook|E?\-book|\) WW|\[Springer\]| epub|ISBN/i', $releasename))
 		{
 			$this->tmpCat = Category::CAT_BOOK_EBOOK;
 			return true;
