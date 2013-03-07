@@ -19,6 +19,9 @@ alt.binaries.*		[ -.]((bd|dl)mux|doku|\[foreign\]|seizoen|staffel)[ -.]		subject
 alt.binaries.*		[ -.](imageset|pictureset|xxx)[ -.]		subject black		Blacklists porn releases.
 
 
+alt.binaries.*		hdnectar|nzbcave		subject black		Bad releases.
+
+
 alt.binaries.*		[ -](de|es|fr|it|ko|nl|pl|se)[ -]((audiobook|cuefix|bonus|bootleg|dirfix|nfofix|dvb|promo|readnfo|real|rerip|repack|proper)[ -])?\d?(bluray|hddvd|dvd|ddc|cd(s|rs|rep)?|mcd|(\d_)?(vls|m?lp|ep|vinyl))		subject black		Blacklists music, music video etc releases.
 
 
