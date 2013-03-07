@@ -1,7 +1,7 @@
 <?php
 require_once(WWW_DIR."/lib/framework/db.php");
 
-/**
+/*
  * This class manages the site wide categories.
  */
 class Category2
@@ -512,6 +512,7 @@ class Category2
 			if($this->isConsole($releasename)){ return $this->tmpCat; }
 			if($this->isTV($releasename)){ return $this->tmpCat; }
 			if($this->isMovie($releasename)){ return $this->tmpCat; }
+
 			return Category::CAT_MISC_OTHER;
 		}  
 		
