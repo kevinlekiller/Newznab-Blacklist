@@ -763,6 +763,11 @@ class Category
 			$this->tmpCat = Category::CAT_TV_SPORT;
 			return true;
 		}
+		else if(preg_match('/(\b|\_|\.| )(NCW(T|Y)S|NNS|NSCS?)(\b|\_|\.| )/i', $releasename))
+		{
+			$this->tmpCat = Category::CAT_TV_SPORT;
+			return true;
+		}
 
 		return false;
 	}
@@ -1401,7 +1406,7 @@ class Category
 	*/	
 	public function isBookComic($releasename)
 	{
-		if (preg_match('/comic/i', $releasename))
+		if (preg_match('/(\.|_|\-)?comic(\.|_|\-)?/i', $releasename))
 		{
 			$this->tmpCat = Category::CAT_BOOK_COMICS;
 			return true;
@@ -1414,7 +1419,7 @@ class Category
 	*/	
 	public function isBookMag($releasename)
 	{
-		if (preg_match('/Mag(s|azin|azine|azines)/i', $releasename))
+		if (preg_match('/(\.|_|\-)?(Mag(s|azin|azine|azines))(\.|_|\-)?/i', $releasename))
 		{
 			$this->tmpCat = Category::CAT_BOOK_MAGS;
 			return true;
@@ -1427,7 +1432,7 @@ class Category
 	*/	
 	public function isBookEbook($releasename)
 	{
-		if (preg_match('/Ebook|E?\-book|\) WW|\[Springer\]| epub|ISBN/i', $releasename))
+		if (preg_match('/(\.|_|\-)?(Ebook|E?\-book|\) WW|\[Springer\]| epub|ISBN)(\.|_|\-)?/i', $releasename))
 		{
 			$this->tmpCat = Category::CAT_BOOK_EBOOK;
 			return true;
