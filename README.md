@@ -26,15 +26,17 @@ You can also use phpmyadmin to backup/import.
 UPDATE PARSING:
 ---------------
 
-In this folder there are 2 scripts, update_parsing_mod.php and remove_misc_releases.php.
+In this folder there are 2 folders, Put in misc/testing and Put in www/lib.
 
-update_parsing_mod.php will try to fix release names from the "other" categories, remove_misc_releases.php is used to remove some releases which update_parsing_mod.php can not fix.
+You put the files in those appropriate folders of your newznab installation.
 
-Open the files in a text editor and read the options to see how to use them.
+Update_parsing_mod.php will try to fix release names from the "other" categories.
 
-These scripts go in newznab/misc/testing
+Remove_misc_releases.php is used to remove some releases which update_parsing_mod.php can not fix. (you can run this after you run update_parsing_mod if you want).
 
-You must be running php 5.4+ to use update_parsing_mod.php
+Open the files in a text editor and read the options to see how to use them. By default update_parsing will only do 24 hours, I recommend turning this to false for the first run, then switching it back to true.
+
+You must be running php 5.4+ to use update_parsing_mod.php.
 
 ---------------------------------------------------------------------------------------------------------------------
 
