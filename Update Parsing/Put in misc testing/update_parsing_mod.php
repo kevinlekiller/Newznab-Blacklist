@@ -7,6 +7,7 @@ require_once (FS_ROOT . "/../../www/lib/site.php");
 require_once (FS_ROOT . "/../../www/lib/util.php");
 require_once (FS_ROOT . "/../../www/lib/releases.php");
 require_once (FS_ROOT . "/../../www/lib/nfo.php");
+require_once (FS_ROOT . "/../../www/lib/category.php");
 require_once (FS_ROOT . "/../../www/lib/categorymod.php");
 require_once (FS_ROOT . "/../../www/lib/movie.php");
 
