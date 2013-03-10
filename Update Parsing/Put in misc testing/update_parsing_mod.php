@@ -59,7 +59,7 @@ if($othercats == true) //Only Other categories
 		LEFT JOIN releasenfo rn ON (rn.releaseID = r.ID)
 		LEFT JOIN groups g ON (g.ID = r.groupID)
 		LEFT JOIN releasefiles rf ON (rf.releaseID = r.ID)
-		WHERE r.categoryID in (".Category::CAT_TV_OTHER.",".Category::CAT_MOVIE_OTHER.",".Category::CAT_MISC_OTHER.",".Category::CAT_XXX_OTHER.")
+		WHERE r.categoryID in (".Category2::CAT_TV_OTHER.",".Category2::CAT_MOVIE_OTHER.",".Category2::CAT_MISC_OTHER.",".Category2::CAT_XXX_OTHER.")
 		%s
 		GROUP BY r.ID";
 }
@@ -75,19 +75,19 @@ else //All categories
 		LEFT JOIN groups g ON (g.ID = r.groupID)
 		LEFT JOIN releasefiles rf ON (rf.releaseID = r.ID)
 		WHERE r.categoryID in
-        (".Category::CAT_GAME_NDS.",".Category::CAT_GAME_PSP.",".Category::CAT_MOVIE_HD.",
-        ".Category::CAT_GAME_WII.",".Category::CAT_GAME_XBOX.",".Category::CAT_GAME_XBOX360.",
-        ".Category::CAT_GAME_WIIWARE.",".Category::CAT_GAME_XBOX360DLC.",".Category::CAT_MOVIE_FOREIGN.",
-        ".Category::CAT_MOVIE_OTHER.",".Category::CAT_MOVIE_SD.",".Category::CAT_MOVIE_BLURAY.",
-        ".Category::CAT_MOVIE_3D.",".Category::CAT_MUSIC_MP3.",".Category::CAT_MUSIC_VIDEO.",
-        ".Category::CAT_MUSIC_AUDIOBOOK.",".Category::CAT_MUSIC_LOSSLESS.",".Category::CAT_PC_0DAY.",
-        ".Category::CAT_PC_ISO.",".Category::CAT_PC_MAC.",".Category::CAT_PC_MOBILEOTHER.",
-        ".Category::CAT_PC_GAMES.",".Category::CAT_PC_MOBILEIOS.",".Category::CAT_PC_MOBILEANDROID.",
-        ".Category::CAT_TV_FOREIGN.",".Category::CAT_TV_SD.",".Category::CAT_TV_HD.",
-        ".Category::CAT_TV_OTHER.",".Category::CAT_TV_SPORT.",".Category::CAT_TV_ANIME.",
-        ".Category::CAT_TV_DOCU.",".Category::CAT_XXX_DVD.",".Category::CAT_XXX_WMV.",
-        ".Category::CAT_XXX_XVID.",".Category::CAT_XXX_X264.",".Category::CAT_XXX_IMAGESET.",
-        ".Category::CAT_XXX_OTHER.",".Category::CAT_BOOK_MAGS.",".Category::CAT_BOOK_EBOOK.",".Category::CAT_BOOK_COMICS.")
+        (".Category2::CAT_GAME_NDS.",".Category2::CAT_GAME_PSP.",".Category2::CAT_MOVIE_HD.",
+        ".Category2::CAT_GAME_WII.",".Category2::CAT_GAME_XBOX.",".Category2::CAT_GAME_XBOX360.",
+        ".Category2::CAT_GAME_WIIWARE.",".Category2::CAT_GAME_XBOX360DLC.",".Category2::CAT_MOVIE_FOREIGN.",
+        ".Category2::CAT_MOVIE_OTHER.",".Category2::CAT_MOVIE_SD.",".Category2::CAT_MOVIE_BLURAY.",
+        ".Category2::CAT_MOVIE_3D.",".Category2::CAT_MUSIC_MP3.",".Category2::CAT_MUSIC_VIDEO.",
+        ".Category2::CAT_MUSIC_AUDIOBOOK.",".Category2::CAT_MUSIC_LOSSLESS.",".Category2::CAT_PC_0DAY.",
+        ".Category2::CAT_PC_ISO.",".Category2::CAT_PC_MAC.",".Category2::CAT_PC_MOBILEOTHER.",
+        ".Category2::CAT_PC_GAMES.",".Category2::CAT_PC_MOBILEIOS.",".Category2::CAT_PC_MOBILEANDROID.",
+        ".Category2::CAT_TV_FOREIGN.",".Category2::CAT_TV_SD.",".Category2::CAT_TV_HD.",
+        ".Category2::CAT_TV_OTHER.",".Category2::CAT_TV_SPORT.",".Category2::CAT_TV_ANIME.",
+        ".Category2::CAT_TV_DOCU.",".Category2::CAT_XXX_DVD.",".Category2::CAT_XXX_WMV.",
+        ".Category2::CAT_XXX_XVID.",".Category2::CAT_XXX_X264.",".Category2::CAT_XXX_IMAGESET.",
+        ".Category2::CAT_XXX_OTHER.",".Category2::CAT_BOOK_MAGS.",".Category2::CAT_BOOK_EBOOK.",".Category2::CAT_BOOK_COMICS.")
 		%s
 		GROUP BY r.ID";
 }
@@ -122,7 +122,7 @@ function updateCategory($rel,$foundName,$methodused)
 	$categoryID = null;
 	$category = new Category2();
 	$categoryID = $category->determineCategory($rel['groupname'], $foundName);
-	if(($methodused == 'a.b.hdtv.x264') && ($rel['groupname'] == 'alt.binaries.hdtv.x264')) { $categoryID = Category::CAT_MOVIE_HD; }
+	if(($methodused == 'a.b.hdtv.x264') && ($rel['groupname'] == 'alt.binaries.hdtv.x264')) { $categoryID = Category2::CAT_MOVIE_HD; }
 	if(($categoryID == $rel['categoryID'] || $categoryID == '7900'))
 	{
 		$foundName = null;
