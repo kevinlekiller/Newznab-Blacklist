@@ -52,7 +52,7 @@ $updated = 0;
 if($othercats == true) //Only Other categories
 {
         // Default query for both full db and last 24 hours.
-        $sql = "SELECT r.searchname, r.name, r.ID as RID, r.categoryID, r.guid, r.postdate,
+        $sql = "SELECT r.searchname, r.name, r.fromname, r.ID as RID, r.categoryID, r.guid, r.postdate,
 			   rn.ID as nfoID,
 			   g.name as groupname,
 			   GROUP_CONCAT(rf.name) as filenames
@@ -67,7 +67,7 @@ if($othercats == true) //Only Other categories
 else //All categories
 {
         // Modified query to run against all categories, USE WITH CAUTION.
-        $sql = "SELECT r.searchname, r.name, r.ID as RID, r.categoryID, r.guid, r.postdate,
+        $sql = "SELECT r.searchname, r.name, r.fromname, r.ID as RID, r.categoryID, r.guid, r.postdate,
 			   rn.ID as nfoID,
 			   g.name as groupname,
 			   GROUP_CONCAT(rf.name) as filenames
@@ -119,7 +119,7 @@ function determineCategory($rel,$foundName)
 
 function updateCategory($rel,$foundName,$methodused)
 {
-	global $updated,$echo;
+	global $updated,$echo,$methodused,$foundName;
 	$categoryID = null;
 	$category = new Category2();
 	$categoryID = $category->determineCategory($rel['groupname'], $foundName);
@@ -127,6 +127,7 @@ function updateCategory($rel,$foundName,$methodused)
 	if(($categoryID == $rel['categoryID'] || $categoryID == '7900'))
 	{
 		$foundName = null;
+		$methodused = null;
 	}
 	else
 	{
@@ -189,21 +190,6 @@ if ($res)
 				}
 				$foundName = $title;
 				$methodused = "Release names 1: Knoc.One";
-				if (determineCategory($rel,$foundName) === true)
-				{
-					updateCategory($rel,$foundName,$methodused);
-				}
-				else
-				{
-					$foundName = null;
-				}
-			}
-						
-			//QoQ releases
-			if (preg_match('/^QoQ\-(.*)$/', $rel['name']))
-			{
-				$foundName = strrev( $rel['name'] );
-				$methodused = "Release names 2: QoQ";
 				if (determineCategory($rel,$foundName) === true)
 				{
 					updateCategory($rel,$foundName,$methodused);
@@ -1238,6 +1224,62 @@ if ($res)
 							{
 								$foundName = null;
 							}						
+						}
+					}
+					// Petje Releases
+					if (preg_match('/Petje \<petje\@pietamientje\.com\>/', $rel['fromname'], $matches3) && $foundName == '')
+					{
+						if (preg_match('/.*\.(mkv|avi|mp4|wmv|divx)/', $file, $matches4))
+						{
+							$array_new = explode('\\', $matches4[0]);
+							foreach($array_new as $item)
+							{
+								if (preg_match('/.*\((19|20\d{2})\)$/', $item, $matched))
+								{
+										$foundName = $matched[0].".720p.x264-Petje";
+										$methodused = "Petje";
+										if (determineCategory($rel,$foundName) === true)
+										{
+											updateCategory($rel,$foundName,$methodused);
+										}
+										else
+										{
+											$foundName = null;
+										}
+										break 2;
+								}
+							}
+						}
+					}
+				
+					//3D Remux
+					if (preg_match('/.*Remux\.mkv/', $file, $matches4))
+					{
+							$foundName = str_replace(".mkv", "", $matches4[0]);
+							$methodused = "3D Remux";
+							if (determineCategory($rel,$foundName) === true)
+							{
+								updateCategory($rel,$foundName,$methodused);
+							}
+							else
+							{
+								$foundName = null;
+							}
+					}													
+					//QoQ Extended
+					if (preg_match('/Q\-sbuSLN.*/i', $file, $matches4))
+					{
+						$new1 = preg_match('/( )?(\.wmv|\.divx|\.avi|\.mkv)/i', $matches4[0], $matched);
+						$new2 = str_replace($matched[0], "", $matches4[0]);
+						$foundName = strrev($new2);
+						$methodused = "QoQ Extended";
+						if (determineCategory($rel,$foundName) === true)
+						{
+							updateCategory($rel,$foundName,$methodused);
+						}
+						else
+						{
+							$foundName = null;
 						}
 					}
 				}
