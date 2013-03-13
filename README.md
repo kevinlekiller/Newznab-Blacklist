@@ -23,7 +23,7 @@ To import the blacklist, from a command where the blacklist is, type: mysql --us
 You can also use phpmyadmin to backup/import.
 
 ---------------
-UPDATE PARSING:
+UPDATE PARSING (Temporarily removed, breaches the newznab plus license):
 ---------------
 
 In this folder there are 2 folders, Put in misc/testing and Put in www/lib.
