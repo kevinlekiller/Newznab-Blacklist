@@ -21,7 +21,7 @@ $debug = false;
 /// Set this to true to see fails
 
 /// The following value sets either echo's the results or applies the changes.
-$echo = false;
+$echo = true;
 /// Set this to true to echo only
 
 /// The following value sets the amount of time to either 24 hours or the Whole DB
@@ -1267,7 +1267,7 @@ if ($res)
 							}
 					}													
 					//QoQ Extended
-					if (preg_match('/Q\-sbuSLN.*/i', $file, $matches4))
+					if (preg_match('/Q\-sbus.*/i', $file, $matches4))
 					{
 						$new1 = preg_match('/( )?(\.wmv|\.divx|\.avi|\.mkv)/i', $matches4[0], $matched);
 						$new2 = str_replace($matched[0], "", $matches4[0]);
