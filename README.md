@@ -1,5 +1,8 @@
 Newznab-Blacklist
 =================
+
+Working on a project called nZEDb now : https://github.com/nZEDb/nZEDb
+
 Scripts to clean up your Newznab installation.
 
 ----------
